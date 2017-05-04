@@ -101,10 +101,10 @@ def load_train_data():
 
     xind = 0;
     cind = 0;
-    image_names = read_image_list_file(TrainFolder + 'list.txt');
+    image_names = read_image_list_file(TileFolder + 'list.txt');
     for fn in image_names:
-        full_fn = TrainFolder + '/' + fn;
-        mask_fn = TrainFolder + '/mask_' + fn[6:];
+        full_fn = TileFolder + '/' + fn;
+        mask_fn = TileFolder + '/mask_' + fn[6:];
         png = np.array(Image.open(full_fn).convert('RGB'));
         png_Y = np.array(Image.open(mask_fn).convert('RGB'));
         msk = np.array(Image.open(full_fn[
@@ -139,7 +139,7 @@ def load_train_data():
 def load_data():
     X = np.zeros(shape=(800000, 3, APS, APS), dtype=np.float32);
     inds = np.zeros(shape=(800000,), dtype=np.int32);
-    coor = np.zeros(shape=(1000000, 2), dtype=np.int32);
+    coor = np.zeros(shape=(800000, 2), dtype=np.int32);
 
     xind = 0;
     cind = 0;
@@ -422,8 +422,9 @@ def get_aug_feas(X):
 def write_to_image(pred):
     # abc
     for idx in range(pred.shape[0]):
-        filename = 'necrosis_img/' +
-        scipy.misc.imsave('outfile.jpg', image_array);
+        img = np.reshape(pred[0], (PS, PS));
+        filename = 'necrosis_test_img/' + str(idx) + 'png';
+        scipy.misc.imsave('outfile.jpg', img);
 
 
 def split_validation(classn):
