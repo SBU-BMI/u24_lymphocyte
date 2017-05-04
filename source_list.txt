@@ -3,3 +3,4 @@
 /data08/shared/lehhou/active_learning_osprey
 /data08/shared/lehhou/nucleus_encoder
 /data08/shared/lehhou/heatmaps_code
+/data07/shared/lehhou/lym_pipeline/
