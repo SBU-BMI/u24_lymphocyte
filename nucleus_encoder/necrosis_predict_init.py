@@ -30,8 +30,10 @@ n_time_duplicate = 10;   # Param for duplicating negative data
 blob_filter_size = 37;
 n_unit_hiddenlayer = 100;
 n_binaryclassifier = 1;
-APS = 500;
-PS = 200;
+#APS = 500;
+#PS = 200;
+APS = None;
+PS = None;
 batchsize = 10;
 num_epoch = 300;
 LearningRate = theano.shared(np.array(1e-3, dtype=np.float32));
@@ -694,7 +696,7 @@ def save_model(out_layer, file_path):
 
 
 
-def main():
+def necrosis_predict():
 
     # attach additional layers for classification
     #network, encoder_layer, whole_autoencoder, latter_param, all_param, input_var, aug_var = build_classfication_model_from_ae();
@@ -729,5 +731,3 @@ def main():
 
     print "DONE!";
 
-if __name__ == "__main__":
-    main();
