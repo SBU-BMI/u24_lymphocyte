@@ -12,7 +12,7 @@ if not os.path.exists(output_folder):
     os.mkdir(output_folder);
 
 try:
-    mpp_w_h = os.popen('bash get_mpp_w_h.sh {}'.format(slide_name)).read();
+    mpp_w_h = os.popen('bash ../util/get_mpp_w_h.sh {}'.format(slide_name)).read();
     if len(mpp_w_h.split()) != 3:
         print '{}: mpp_w_h wrong'.format(slide_name);
         exit(1);
@@ -43,7 +43,7 @@ for x in range(1, width, pw):
         else:
             pw_y = pw;
         fname = '{}/{}_{}_{}_{}.png'.format(output_folder, x, y, pw, patch_size_20X);
-        os.system('bash save_tile.sh {} {} {} {} {} {}'.format(slide_name, x, y, pw_x, pw_y, fname));
+        os.system('bash ../util/save_tile.sh {} {} {} {} {} {}'.format(slide_name, x, y, pw_x, pw_y, fname));
         patch = Image.open(fname).resize((patch_size_20X * pw_x / pw, patch_size_20X * pw_y / pw), Image.ANTIALIAS);
         patch.save(fname);
 

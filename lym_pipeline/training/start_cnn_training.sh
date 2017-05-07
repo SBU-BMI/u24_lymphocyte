@@ -7,9 +7,9 @@
 # output:
 #   Convolutional Neural Network model: models/cnn_model.pkl
 
-source ./bashrc_theano.sh
+source ../conf/bashrc_theano.sh
 
 GPU=$1
-THEANO_FLAGS="device=gpu${GPU}" python train_cnn.py > log.train_cnn.txt
+THEANO_FLAGS="device=gpu${GPU}" python -u train_cnn.py > log.train_cnn.txt
 
 exit 0

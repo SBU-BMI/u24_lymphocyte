@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./bashrc_theano.sh
+source ../conf/bashrc_theano.sh
 
 FOLDER=$1
 PARAL=$2
@@ -15,7 +15,7 @@ for files in ${FOLDER}/*/; do
         echo ${files}/patch-level-color.txt exists
     else
         echo ${files}/patch-level-color.txt generating
-        python color_stats.py ${files}
+        python -u color_stats.py ${files}
     fi
 done
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./bashrc_theano.sh
+source ../conf/bashrc_theano.sh
 
 FOLDER=$1
 # PARAL = [0, MAX_PARAL-1]
@@ -17,7 +17,7 @@ for files in ${FOLDER}/*/; do
         echo ${files}/patch-level-lym.txt exists
     else
         echo ${files}/patch-level-lym.txt generating
-        THEANO_FLAGS="device=gpu${GPU}" python pred.py ${files}
+        THEANO_FLAGS="device=gpu${GPU}" python -u pred.py ${files}
     fi
 done
 

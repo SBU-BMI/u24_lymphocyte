@@ -4,26 +4,23 @@ from scipy import misc
 from PIL import Image
 from skimage.color import hed2rgb, rgb2hed
 
-#APS = 300;
-#PS = 100;
+APS = 300;
+PS = 100;
 MARGIN = 90;
 
-def rotate_img(x, degree):
-    rotate_angle = (np.random.rand(1)[0]-0.5)*2 * degree;
+def rotate_img(x):
+    rotate_angle = (np.random.rand(1)[0]-0.5)*2 * 45.0;
     im = Image.fromarray(x.astype(np.uint8));
     x = np.array(im.rotate(rotate_angle, Image.BICUBIC)).astype(np.float32);
     return x;
 
-def data_aug_img(img, msk, mu, sigma, deterministic=False, idraw=-1, jdraw=-1, APS=500, PS=224):
+def data_aug_img(img, mu, sigma, deterministic=False, idraw=-1, jdraw=-1):
     # rotate small degree
-    if np.random.rand(1)[0] < 0.9:
-        img = img.transpose();
-        msk = msk.transpose();
-        if not deterministic:
-            img = rotate_img(img, 45.0);
-            msk = rotate_img(img, 45.0);
-        img = img.transpose();
-        msk = msk.transpose();
+    if not deterministic:
+        if np.random.rand(1)[0] < 0.9:
+            img = img.transpose();
+            img = rotate_img(img);
+            img = img.transpose();
 
     # crop
     icut = APS - PS;
@@ -39,7 +36,6 @@ def data_aug_img(img, msk, mu, sigma, deterministic=False, idraw=-1, jdraw=-1, A
         ioff = np.random.randint(MARGIN, icut + 1 - MARGIN);
         joff = np.random.randint(MARGIN, jcut + 1 - MARGIN);
     img = img[:, ioff : ioff+PS, joff : joff+PS];
-    msk = msk[ioff : ioff+PS, joff : joff+PS];
 
     # adjust color
     if not deterministic:
@@ -59,16 +55,13 @@ def data_aug_img(img, msk, mu, sigma, deterministic=False, idraw=-1, jdraw=-1, A
     if not deterministic:
         if np.random.rand(1)[0] < 0.5:
             img = img[:, ::-1, :];
-            msk = msk[::-1, :];
         if np.random.rand(1)[0] < 0.5:
             img = img[:, :, ::-1];
-            msk = msk[:, ::-1];
 
     # transpose
     if not deterministic:
         if np.random.rand(1)[0] < 0.5:
             img = img.transpose((0, 2, 1));
-            msk = msk.transpose((1, 0));
 
     ## scaling
     #if not deterministic:
@@ -79,28 +72,22 @@ def data_aug_img(img, msk, mu, sigma, deterministic=False, idraw=-1, jdraw=-1, A
     #                (int(img.shape[2]*jscale), int(img.shape[1]*iscale)) \
     #                ).transpose().astype(np.float32);
 
-    img, msk = zero_centering(img, msk, APS=APS, PS=PS);
-    img = (img - mu) / sigma;
+    img = zero_centering(img);
+    img = (img / 255.0 - mu) / sigma;
 
-    print "mu, sigma", mu, sigma;
+    return img;
 
-    return img, msk;
-
-def zero_centering(img, msk, APS=500, PS=224):
+def zero_centering(img):
     x0 = (img.shape[1] - PS) // 2;
     y0 = (img.shape[2] - PS) // 2;
     im = Image.fromarray(img.transpose().astype(np.uint8));
-    mk = Image.fromarray(msk.transpose().astype(np.uint8));
     img = np.array(im.crop((x0, y0, x0+PS, y0+PS))).transpose().astype(np.float32);
-    msk = np.array(mk.crop((x0, y0, x0+PS, y0+PS))).transpose().astype(np.float32);
-    return img, msk;
+    return img;
 
-def data_aug(X, Y, mu, sigma, deterministic=False, idraw=-1, jdraw=-1, APS=500, PS=200):
+def data_aug(X, mu, sigma, deterministic=False, idraw=-1, jdraw=-1):
     Xc = np.zeros(shape=(X.shape[0], X.shape[1], PS, PS), dtype=np.float32);
-    Yc = np.zeros(shape=(Y.shape[0], PS, PS), dtype=np.int32);
     Xcopy = X.copy();
-    Ycopy = Y.copy();
     for i in range(len(Xcopy)):
-        Xc[i], Yc[i] = data_aug_img(Xcopy[i], Ycopy[i], mu, sigma, deterministic=deterministic, idraw=idraw, jdraw=jdraw, APS=APS, PS=PS);
-    return Xc, Yc;
+        Xc[i] = data_aug_img(Xcopy[i], mu, sigma, deterministic=deterministic, idraw=idraw, jdraw=jdraw);
+    return Xc;
 

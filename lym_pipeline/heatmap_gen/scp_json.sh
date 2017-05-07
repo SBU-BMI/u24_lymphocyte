@@ -1,5 +1,8 @@
 #!/bin/bash
 
-sshpass -p levu2016 scp ./json/meta_* ./json/heatmap_* lehhou@osprey.bmi.stonybrook.edu:/home/lehhou/heatmap_pipeline/json_todo/
+for files in ./json/{meta,heatmap}_*; do
+    bash ../util/scp_to_remote_camic.sh ${files} /home/lehhou/heatmap_pipeline/json_todo/
+    sleep 2
+done
 
 exit 0
