@@ -3,7 +3,7 @@
 SLIDES=/data06/tcga_data/tumor/ucec/
 #SLIDES=/data02/tcga_data/tumor/lusc/
 #SLIDES=/data08/tcga_data/tumor/prad/
-HEAT_LOC=../heatmaps_v2/gened/
+HEAT_LOC=../heatmaps_v2/gened-v4/
 PRED2_F=patch-level-pred-4-14-ucec.txt
 PRED2_AVG=0
 

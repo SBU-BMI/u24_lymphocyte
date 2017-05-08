@@ -82,7 +82,7 @@ def data_aug_img(img, msk, mu, sigma, deterministic=False, idraw=-1, jdraw=-1, A
     img, msk = zero_centering(img, msk, APS=APS, PS=PS);
     img = (img - mu) / sigma;
 
-    print "mu, sigma", mu, sigma;
+    #print "mu, sigma", mu, sigma;
 
     return img, msk;
 
