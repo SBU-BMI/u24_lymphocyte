@@ -607,7 +607,7 @@ def exc_test(test_func, X_test, a_test, y_test):
 
     begin_img_idx = 0;
     for batch in iterate_minibatches(X_test, a_test, y_test, batchsize, shuffle = False):
-        print begin_img_idx;
+        #print begin_img_idx;
         input_real_org, aug_real_org, target_real_org = batch;
         #input_real = data_aug(input_real, mu, sigma);
 

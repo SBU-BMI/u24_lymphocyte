@@ -57,8 +57,8 @@ def load_seg_data_folder(folder, APS):
     idx = 0;
     #print get_img_idx(folder, 'image_');
     image_names = read_image_list_file(folder + '/list.txt');
-    image_names = image_names[1000:1100];    # ??? Need to be removed
-    print image_names;      # ???
+    #image_names = image_names[1000:1100];    # ??? Need to be removed
+    #print image_names;      # ???
     for img_name in image_names:
         # Load file
         loaded_png = Image.open(folder + '/' + img_name + '.png');
@@ -179,7 +179,7 @@ def predict_slide(slide_folder, mu, sigma, param_values, heatmap_folder):
     print ('Convert to lymphocyte size...');
 
     parent_path, slide_name = os.path.split(slide_folder);
-    heatmap_path = heatmap_folder + '/necrosis-prediction_' + slide_name;
+    heatmap_path = heatmap_folder + '/patch-level-necrosis.txt';
     f_res = open(heatmap_path, 'w')
     for idx, big_patch_name in enumerate(image_name_test):
         parts = big_patch_name.split('_');
@@ -203,5 +203,3 @@ def predict_slide(slide_folder, mu, sigma, param_values, heatmap_folder):
 
 
 
-if __name__ == "__main__":
-    predict_slide();

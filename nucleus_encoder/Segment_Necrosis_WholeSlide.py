@@ -16,7 +16,7 @@ import glob
 from batch_norms import batch_norm
 from shape import ReshapeLayer
 from math import floor
-from necrosis_predict import necrosis_predict
+from predict_slide import predict_slide
 
 import scipy.misc
 import os.path
@@ -27,8 +27,8 @@ classification_model_file = 'model_vals/deep_conv_classification_model_deep_segm
 start_id = int(sys.argv[1]);
 step = int(sys.argv[2]);
 
-slide_list_file = '/data08/shared/lehhou/necrosis_segmentation_workingdir/slide_list_read.txt';
-heatmap_folder = '/data08/shared/lehhou/necrosis_segmentation_workingdir/svs_info_dir';
+slide_list_file = '/data08/shared/lehhou/necrosis_segmentation_workingdir/slide_list.txt';
+#slide_list_file = './test_data/temp_slide_list.txt';
 
 def load_model_value(model_file):
     loaded_var = pickle.load(open(model_file, 'rb'));
@@ -63,14 +63,16 @@ def Segment_Necrosis_WholeSlide():
             slide_path = slide_path[:-1];
 
         parent_path, slide_name = os.path.split(slide_path);
-        heatmap_path = heatmap_folder + '/necrosis-prediction_' + slide_name;
+        heatmap_folder = slide_path;
+        heatmap_path = heatmap_folder + '/patch-level-necrosis.txt';
         #if (not os.path.isfile(heatmap_path)):
         #print ("{0}\n{1}\n{2}\n\n".format(slide_path, slide_name, heatmap_path));
+
 
         if (not os.path.isfile(heatmap_path)):
             print "Processing ", slide_path;
             #print ("{}\n{}\n{}\n\n".format(slide_path, slide_name, heatmap_path;
-            #necrosis_predict(slide_path, mu, sigma, param_values, heatmap_folder);
+            predict_slide(slide_path, mu, sigma, param_values, heatmap_folder);
 
 
 if __name__ == "__main__":
