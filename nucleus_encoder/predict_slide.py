@@ -21,8 +21,8 @@ from necrosis_predict import necrosis_predict
 import scipy.misc
 import os.path
 
-model_idx = 270;
-classification_model_file = 'model_vals/deep_conv_classification_model_deep_segmentation_deconv_necrosis_alt2_e{}.pkl'.format(model_idx);
+#model_idx = 270;
+#classification_model_file = 'model_vals/deep_conv_classification_model_deep_segmentation_deconv_necrosis_alt2_e{}.pkl'.format(model_idx);
 
 
 def load_seg_data(train_folder_list, test_folder_list, APS):
@@ -131,8 +131,8 @@ def write_to_image(img, pred):
         filename = './necrosis_test_img_big/pred_' + str(idx) + '.png';
         scipy.misc.imsave(filename, written);
 
-def predict_slide():
-    slide_folder = '/data08/shared/lehhou/nucleus_encoder/test_data/TCGA-38-4630-01Z-00-DX1.d08d0193-c5ed-4db8-b236-1a4c3c3177b8.svs/';
+def predict_slide(slide_folder, mu, sigma, param_values, heatmap_folder):
+    #slide_folder = '/data08/shared/lehhou/nucleus_encoder/test_data/TCGA-38-4630-01Z-00-DX1.d08d0193-c5ed-4db8-b236-1a4c3c3177b8.svs/';
 
     # Get list of image files
     list_file_path = slide_folder + '/list.txt';
@@ -155,10 +155,12 @@ def predict_slide():
     APS = 333;
     PS = 200;
 
+    """
     # Load model file (should be put in upper level later)
     print ('Load model file...');
     mu, sigma, param_values = load_model_value(classification_model_file);
     print ('Finish loading model file');
+    """
 
     # Load testing data
     print ('Load testing data...');
@@ -176,7 +178,9 @@ def predict_slide():
     # Divide the grid 10x10
     print ('Convert to lymphocyte size...');
 
-    f_res = open('./test_data/test_all.txt', 'w')
+    parent_path, slide_name = os.path.split(slide_folder);
+    heatmap_path = heatmap_folder + '/necrosis-prediction_' + slide_name;
+    f_res = open(heatmap_path, 'w')
     for idx, big_patch_name in enumerate(image_name_test):
         parts = big_patch_name.split('_');
         root_x = int(parts[0]);
