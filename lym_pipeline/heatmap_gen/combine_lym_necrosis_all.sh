@@ -4,6 +4,8 @@ LYM_FOLDER=./patch-level-lym/
 NEC_FOLDER=./patch-level-nec/
 
 for files in ${LYM_FOLDER}/*; do
+    if [ ! -f ${files} ]; then continue; fi
+
     fn=`echo ${files} | awk -F'/' '{print $NF}'`
     if [ -f ${NEC_FOLDER}/${fn} ]; then
         bash combine_lym_necrosis.sh ${fn}

@@ -2,7 +2,7 @@
 
 FOLDERLIST=source_list.txt
 OUT_FOLDER=`pwd`
-SUFFIX="py m sh awk"
+SUFFIX="py m sh awk md"
 LIST_FILE_TMP=/tmp/cp_py_file_list.txt
 
 while read fol_setting; do

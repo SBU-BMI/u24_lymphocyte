@@ -162,7 +162,6 @@ def exc_train(train_func, X_train, network):
                 total_loss += loss;
                 total_sparsity += 100.0 * float(np.count_nonzero(mask>1e-6)) / mask.size;
                 n_batch += 1;
-                print("CNN trained [test message].");
             total_loss /= n_batch;
             total_sparsity /= n_batch;
             LearningRate.set_value(np.float32(0.99*LearningRate.get_value()));

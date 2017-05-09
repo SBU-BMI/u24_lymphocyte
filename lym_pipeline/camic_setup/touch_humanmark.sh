@@ -21,4 +21,4 @@ bash ../util/operation_on_remote_camic.sh "cd /home/lehhou/humanmark_pipeline/; 
 
 cat /tmp/${LISTFILE}.tmp >> ${LISTFILE_DONE}
 
-rm *.json
+rm -rf *.json
