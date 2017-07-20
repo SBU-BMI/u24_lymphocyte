@@ -6,7 +6,7 @@ FOLDER=$1
 # PARAL = [0, MAX_PARAL-1]
 PARAL=$2
 MAX_PARAL=$3
-GPU=$((PARAL % 2))
+GPU=$4
 
 LINE_N=0
 for files in ${FOLDER}/*/; do
