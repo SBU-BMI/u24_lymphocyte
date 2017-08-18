@@ -12,4 +12,6 @@ Assumes that a file called `inputs` and `outputs` are in the same folder.
 
     Be aware that files consume varying amounts of memory and if memory is full, threads will fail.
 
-3. Run a script that collects all statistics computed in forgoing step to obtain surival curves.
+3. `collateClusterIdx.sh` collects all the statistics into csv files.
+
+4. These were then sent to MD Anderson for surival curve analysis.
