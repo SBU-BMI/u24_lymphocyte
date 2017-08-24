@@ -12,7 +12,7 @@ If you have a trained CNN model and you want to generate and visualize lymphocyt
 
 bash svs2heatmap.sh
 
-This basically runs step 1, 4, 5, 6 in sequence.
+This basically runs step 4, 5, 6 in sequence.
 
 ## Ground truth annotation setup (not fully tested)
 Run the following script:
