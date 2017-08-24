@@ -4,10 +4,8 @@ from . import embedding
 from . import combine
 from . import containers
 from . import activations
-from . import downsample
 from . import upsample
 from . import conv
-from . import dnn
 from . import updates
 from . import costs
 from . import stochastic
@@ -78,18 +76,6 @@ from .activations import (BaseActivationNode,
                           VeryLeakyReLUNode,
                           SpatialSoftmaxNode,
                           ELUNode)
-from .downsample import (FeaturePoolNode,
-                         MaxoutNode,
-                         Pool2DNode,
-                         MeanPool2DNode,
-                         MaxPool2DNode,
-                         SumPool2DNode,
-                         GlobalPool2DNode,
-                         GlobalMeanPool2DNode,
-                         GlobalMaxPool2DNode,
-                         GlobalSumPool2DNode,
-                         CustomPool2DNode,
-                         CustomGlobalPoolNode)
 from .upsample import (RepeatNDNode,
                        SpatialRepeatNDNode,
                        SparseUpsampleNode,
@@ -97,13 +83,6 @@ from .upsample import (RepeatNDNode,
 from .conv import (Conv2DNode,
                    Conv3DNode,
                    Conv3D2DNode)
-from .dnn import (DnnPoolNode,
-                  DnnMeanPoolNode,
-                  DnnMaxPoolNode,
-                  DnnConv2DNode,
-                  DnnConv3DNode,
-                  DnnConv2DWithBiasNode,
-                  DnnConv3DWithBiasNode)
 from .updates import (UpdateScaleNode,
                       StandardUpdatesNode,
                       SGDNode,

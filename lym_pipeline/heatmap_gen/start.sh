@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ../conf/bashrc_base.sh
 source ../conf/variables.sh
 
 rm -rf json patch-level-lym patch-level-nec patch-level-merged
@@ -16,10 +17,10 @@ bash combine_lym_necrosis_all.sh
 # Generate meta and heatmap files for high-res and low-res heatmaps.
 bash gen_all_json.sh
 
-# Scp all meta and heatmap files to osprey
-bash scp_json.sh
+# Scp json files to osprey:/home/lehhou/heatmap_pipeline/json_todo/
+#bash scp_json.sh
 
-# Put the heatmaps in the database
-bash operation_on_remote_camic.sh "cd /home/lehhou/heatmap_pipeline; bash put_heatmaps_in_all.sh ${DEFAULT_TYPE}"
+# Put empty humanmarks
+#bash put_empty_humanmark.sh
 
 exit 0

@@ -50,8 +50,7 @@ info = subprocess.check_output(["openslide-show-properties", imgfilename]);
 
 slide_width_openslide = get_value(info, 'openslide.level[0].width');
 slide_height_openslide = get_value(info, 'openslide.level[0].height');
-caseid = casename;
-uri = casename;
+caseid = casename.split('.')[0];
 cancertype = slide_type;
 
 analysis_execution_id = 'highlym';
@@ -100,7 +99,6 @@ dict_img = {};
 #dict_img['height'] = slide_height;
 #dict_img['width'] = slide_width;
 #dict_img['cancer_type'] = cancertype;
-#dict_img['uri'] = uri;
 dict_img['case_id'] = caseid;
 dict_img['subject_id'] = caseid;
 

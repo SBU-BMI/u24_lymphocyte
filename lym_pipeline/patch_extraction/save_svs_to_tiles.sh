@@ -6,7 +6,10 @@ IN_FOLDER=../svs/
 OUT_FOLDER=../patches/
 
 LINE_N=0
-for files in ${IN_FOLDER}/*; do
+for files in ${IN_FOLDER}/*.{svs,tif}; do
+    if [ ! -f ${files} ]; then
+        continue;
+    fi
     LINE_N=$((LINE_N+1))
     if [ $((LINE_N % MAX_PARA)) -ne ${COD_PARA} ]; then continue; fi
 
