@@ -1,0 +1,4 @@
+hostname,filename,last_modified,cancer_type,case_id,subject_id,identifier,width,height,mpp_x,mpp_y,objective,vendor,status,level_count,imageid
+osprey.bmi.stonybrook.edu,/home/data/tcga_data/unknown/11_04.tif,05-03-17:11.39.31,unknown,11_04,11_04,11_04.tif,15391.000000,6749.000000,0.500000,0.500000,20.000000,generic-tiff,some_errors,7,-1
+osprey.bmi.stonybrook.edu,/home/data/tcga_data/unknown/3_01.tif,05-03-17:11.39.33,unknown,3_01,3_01,3_01.tif,15391.000000,6749.000000,0.500000,0.500000,20.000000,generic-tiff,some_errors,7,-1
+osprey.bmi.stonybrook.edu,/home/data/tcga_data/unknown/9_03.tif,05-03-17:11.39.35,unknown,9_03,9_03,9_03.tif,15391.000000,6749.000000,0.500000,0.500000,20.000000,generic-tiff,some_errors,7,-1
