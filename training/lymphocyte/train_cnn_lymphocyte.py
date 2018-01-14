@@ -17,29 +17,26 @@ from scipy import misc
 from PIL import Image
 from lasagne import init
 from math import floor
-
-from shape import ReshapeLayer
-from batch_norms import batch_norm, SoftThresPerc
-from data_aug import data_aug
-from ch_inner_prod import ChInnerProd, ChInnerProdMerge
-
 from sklearn.metrics import mean_squared_error, accuracy_score, hamming_loss, roc_curve, auc
+
+from data_aug import data_aug
+sys.path.append('..')
+from common.shape import ReshapeLayer
+from common.batch_norms import batch_norm, SoftThresPerc
+from common.ch_inner_prod import ChInnerProd, ChInnerProdMerge
 
 APS = 300;
 PS = 100;
 LearningRate = theano.shared(np.array(1e-3, dtype=np.float32));
 BatchSize = 100;
 
-all_data_folder = '../data/';
-dataset_list = '../data/small_cnn_data_list.txt';
+filename_cae_model = sys.argv[1] + '/cae_model.pkl';
+training_data_path = sys.argv[2];
+dataset_list = training_data_path + '/lym_data_list.txt';
+filename_output_model = sys.argv[3] + '/cnn_model.pkl';
 
-filename_model_ae = 'models/cae_model.pkl';
-filename_mu = 'models/mu.pkl';
-filename_sigma = 'models/sigma.pkl';
-
-mu = pickle.load(open(filename_mu, 'rb'));
-sigma = pickle.load(open(filename_sigma, 'rb'));
-model_dump = 'models/cnn_model.pkl';
+mu = 0.6151888371;
+sigma = 0.2506813109;
 aug_fea_n = 1;
 
 def iterate_minibatches(inputs, augs, targets, batchsize, shuffle=False):
@@ -104,7 +101,7 @@ def load_data(classn):
     lines = [line.rstrip('\n') for line in open(dataset_list)];
     valid_i = 0;
     for line in lines:
-        split_folders = [all_data_folder + s for s in line.split()];
+        split_folders = [training_data_path + "/" + s for s in line.split()];
         if valid_i == 0:
             # testing data
             X_test, y_test = load_data_split(classn, split_folders, False);
@@ -215,13 +212,13 @@ def train_round(num_epochs, network, train_fn, val_fn, classn, X_train, a_train,
 
         if epoch % 5 == 0:
             param_values = layers.get_all_param_values(network);
-            pickle.dump(param_values, open(model_dump, 'w'));
+            pickle.dump(param_values, open(filename_output_model, 'w'));
 
         if epoch == 20:
             LearningRate.set_value(np.float32(0.10*LearningRate.get_value()));
 
     param_values = layers.get_all_param_values(network);
-    pickle.dump(param_values, open(model_dump, 'w'));
+    pickle.dump(param_values, open(filename_output_model, 'w'));
 
 
 def build_network_from_ae(classn):
@@ -275,7 +272,7 @@ def build_network_from_ae(classn):
     layer = layers.ElemwiseSumLayer([layer, glblf]);
 
     network = ReshapeLayer(layer, ([0], -1));
-    layers.set_all_param_values(network, pickle.load(open(filename_model_ae, 'rb')));
+    layers.set_all_param_values(network, pickle.load(open(filename_cae_model, 'rb')));
     mask_map.beta.set_value(np.float32(0.9*mask_map.beta.get_value()));
     old_params = layers.get_all_params(network, trainable=True);
 

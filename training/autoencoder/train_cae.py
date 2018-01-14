@@ -18,31 +18,29 @@ from PIL import Image
 from lasagne import init
 from math import floor
 
-from shape import ReshapeLayer
-from batch_norms import batch_norm, SoftThresPerc
 from data_aug_100x100 import data_aug
-from ch_inner_prod import ChInnerProd, ChInnerProdMerge
+sys.path.append('..')
+from common.shape import ReshapeLayer
+from common.batch_norms import batch_norm, SoftThresPerc
+from common.ch_inner_prod import ChInnerProd, ChInnerProdMerge
 
 PS = 100;
 LearningRate = theano.shared(np.array(3e-2, dtype=np.float32));
 NumEpochs = 10;
 BatchSize = 32;
 
-filename_model_ae = 'models/cae_model.pkl'
-filename_mu = 'models/mu.pkl';
-filename_sigma = 'models/sigma.pkl';
+filename_output_model = sys.argv[1] + '/cae_model.pkl'
+training_data_path = sys.argv[2];
 
-mu = pickle.load(open(filename_mu, 'rb'));
-sigma = pickle.load(open(filename_sigma, 'rb'));
+mu = 0.6151888371;
+sigma = 0.2506813109;
 
 def load_data():
-    all_data_folder = '../data/small_cae_data/';
-
     nbuf = 0;
     X_train = np.zeros(shape=(500000, 3, 100, 100), dtype=np.float32);
-    lines = [line.rstrip('\n') for line in open(all_data_folder + '/label.txt')];
+    lines = [line.rstrip('\n') for line in open(training_data_path + '/label.txt')];
     for line in lines:
-        full_path = all_data_folder + '/image_' + line.split()[0];
+        full_path = training_data_path + '/image_' + line.split()[0];
         png = np.array(Image.open(full_path).convert('RGB')).transpose() / 255.0;
         X_train[nbuf, :, :, :] = png;
         nbuf += 1;
@@ -55,16 +53,16 @@ def load_data():
     return X_train;
 
 
-def iterate_minibatches_ae(inputs, batchsize, shuffle=False):
+def iterate_minibatches_ae(inputs, shuffle=False):
     if shuffle:
         indices = np.arange(len(inputs));
         np.random.shuffle(indices);
 
-    for start_idx in range(0, len(inputs) - batchsize + 1, batchsize):
+    for start_idx in range(0, len(inputs) - BatchSize + 1, BatchSize):
         if shuffle:
-            excerpt = indices[start_idx:start_idx + batchsize];
+            excerpt = indices[start_idx:start_idx + BatchSize];
         else:
-            excerpt = slice(start_idx, start_idx + batchsize);
+            excerpt = slice(start_idx, start_idx + BatchSize);
         yield inputs[excerpt];
 
 
@@ -142,7 +140,10 @@ def build_training_function(network, input_var, mask_var, output_var):
 def exc_train(train_func, X_train, network):
     print("Starting training...");
     print("Epoch\t\tIter\t\tLoss\t\tSpar\t\tTime");
-    it_div = 10;
+    if len(X_train) < 10000:
+        it_div = 1;
+    else:
+        it_div = 10;
     for epoch in range(NumEpochs):
         start_time = time.time();
         for it in range(it_div):
@@ -150,7 +151,7 @@ def exc_train(train_func, X_train, network):
             total_loss = 0;
             total_sparsity = 0;
             n_batch = 0;
-            for batch in iterate_minibatches_ae(X_train[it::it_div], BatchSize, shuffle=True):
+            for batch in iterate_minibatches_ae(X_train[it::it_div], shuffle=True):
                 batch = data_aug(batch);
                 batch_target = np.reshape(batch, (batch.shape[0], -1));
                 loss, mask = train_func(batch, batch_target);
@@ -167,7 +168,7 @@ def exc_train(train_func, X_train, network):
 
         if epoch % 1 == 0:
             param_values = layers.get_all_param_values(network);
-            pickle.dump(param_values, open(filename_model_ae.format(epoch), 'w'));
+            pickle.dump(param_values, open(filename_output_model.format(epoch), 'w'));
 
 
 def main():

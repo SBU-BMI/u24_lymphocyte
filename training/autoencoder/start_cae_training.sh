@@ -1,15 +1,13 @@
 #!/bin/bash
 # start training the CNN
 # inputs:
-#   Mean and variance of the data: models/mu.pkl, models/sigma.pkl
-#   Training data under ../data/
+#   Training data under ${CAE_TRAINING_DATA}/
 # output:
-#   Convolutional Autoencoder model: models/cae_model.pkl
-#       There is an existing model. You can skip this step by:
-#       cp models/cae_model_trained.pkl models/cae_model.pkl
+#   Convolutional Autoencoder model: ${CAE_MODEL_PATH}/cae_model.pkl
 
-source ../conf/variables.sh
-GPU=0
-THEANO_FLAGS="device=cuda${GPU}" python -u train_cae.py &> ../log/log.train_cae.txt
+source ../../conf/variables.sh
+
+THEANO_FLAGS="device=${CAE_TRAINING_DEVICE}" python -u train_cae.py \
+    ${CAE_MODEL_PATH} ${CAE_TRAINING_DATA} &> ${LOG_OUTPUT_FOLDER}/log.train_cae.txt
 
 exit 0

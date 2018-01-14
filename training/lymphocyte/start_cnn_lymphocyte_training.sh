@@ -1,13 +1,14 @@
 #!/bin/bash
 # start training the CNN
 # inputs:
-#   Convolutional Autoencoder model: models/cae_model.pkl
-#   Mean and variance of the data: models/mu.pkl, models/sigma.pkl
-#   Training data under ../data/
+#   Convolutional Autoencoder model: ${CAE_MODEL_PATH}/cae_model.pkl
+#   Training data under ${CNN_TRAINING_DATA}/
 # output:
-#   Convolutional Neural Network model: models/cnn_model.pkl
+#   Convolutional Neural Network model: ${LYM_NECRO_CNN_MODEL_PATH}/cnn_model.pkl
 
-GPU=0
-THEANO_FLAGS="device=cuda${GPU}" python -u train_cnn_lymphocyte.py &> ../log/log.train_cnn_lymphocyte.txt
+source ../../conf/variables.sh
+
+THEANO_FLAGS="device=${LYM_CNN_TRAINING_DEVICE}" python -u train_cnn_lymphocyte.py \
+    ${CAE_MODEL_PATH} ${LYM_CNN_TRAINING_DATA} ${LYM_NECRO_CNN_MODEL_PATH} &> ${LOG_OUTPUT_FOLDER}/log.train_cnn_lymphocyte.txt
 
 exit 0

@@ -8,8 +8,10 @@ validation.
 Author: Jan Schlüter
 """
 
+import sys
 import theano
 import theano.tensor as T
+sys.path.append('../../third_party')
 import treeano.theano_extensions.tensor as ttt
 from lasagne import init
 from lasagne import nonlinearities
