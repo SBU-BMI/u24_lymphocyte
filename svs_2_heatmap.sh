@@ -1,17 +1,19 @@
 #!/bin/bash
 
+source ./conf/variables.sh
+
 cd patch_extraction
-nohup bash start.sh &> log/log.patch_extraction_start.txt &
+nohup bash start.sh &
 cd ..
 
 cd prediction
-nohup bash start.sh &> log/log.prediction_start.txt &
+nohup bash start.sh &
 cd ..
 
 wait;
 
 cd heatmap_gen
-nohup bash start.sh &> log/log.heatmap_gen_start.sh &
+nohup bash start.sh &
 cd ..
 
 wait;

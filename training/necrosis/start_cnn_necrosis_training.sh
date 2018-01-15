@@ -1,12 +1,13 @@
 #!/bin/bash
 # start training the CNN for necrosis segmentation
 # inputs:
-#   Mean and variance of the data: models/mu.pkl, models/sigma.pkl
-#   Training data under ../data/
+#   Training data under ${CNN_TRAINING_DATA}
 # output:
-#   Convolutional Neural Network model: models/cnn_model.pkl
+#   Convolutional Neural Network model: ${LYM_NECRO_CNN_MODEL_PATH}/cnn_nec_model.pkl
 
-GPU=0
-THEANO_FLAGS="device=cuda${GPU}" python -u train_cnn_necrosis.py &> ../log/log.train_cnn_necrosis.txt
+source ../../conf/variables.sh
+
+THEANO_FLAGS="device=${NEC_CNN_TRAINING_DEVICE}" python -u train_cnn_necrosis.py \
+   ${NEC_CNN_TRAINING_DATA} ${LYM_NECRO_CNN_MODEL_PATH} &> ${LOG_OUTPUT_FOLDER}/log.train_cnn_necrosis.txt
 
 exit 0

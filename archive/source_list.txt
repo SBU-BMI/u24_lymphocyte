@@ -1,6 +1,0 @@
-/data03/shared/lehhou/lym_project 3
-/data07/shared/lehhou/openslide_svs_extract_code
-/data08/shared/lehhou/active_learning_osprey
-/data08/shared/lehhou/nucleus_encoder
-/data08/shared/lehhou/heatmaps_code
-/data07/shared/lehhou/lym_pipeline/

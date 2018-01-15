@@ -1,7 +1,0 @@
-# exclude everything
-inputs/*
-output/*
-
-# exception to rule
-!inputs/.gitkeep
-!output/.gitkeep

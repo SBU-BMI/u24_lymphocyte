@@ -72,7 +72,7 @@ def get_img_idx(folder, prefix='image_'):
     file_idx = np.sort(file_idx);
     return file_idx;
 
-def predict_slide(slide_folder, mu, sigma, param_values, output_path):
+def predict_slide(slide_folder, mu, sigma, param_values, output_path, heat_map_out):
     # Get list of image files
     list_file_path = slide_folder + '/list.txt';
     img_name_list = [];
@@ -105,7 +105,7 @@ def predict_slide(slide_folder, mu, sigma, param_values, output_path):
     print "Output shape: image, groundtruth, prediction ", image_array.shape, groundtruth_array.shape, prediction_array.shape;
 
     parent_path, slide_name = os.path.split(slide_folder);
-    heatmap_path = output_path + '/patch-level-necrosis.txt';
+    heatmap_path = output_path + '/' + heat_map_out;
     f_res = open(heatmap_path, 'w')
     for idx, big_patch_name in enumerate(image_name_test):
         parts = big_patch_name.split('_');

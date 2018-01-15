@@ -19,7 +19,11 @@ CAE_TRAINING_DEVICE=gpu0
 CAE_MODEL_PATH=/data01/shared/lehhou/u24_lymphocyte/data/models_cae
 LYM_CNN_TRAINING_DATA=/data01/shared/lehhou/u24_lymphocyte/data/training_data_cnn
 LYM_CNN_TRAINING_DEVICE=gpu0
+LYM_CNN_PRED_DEVICE=gpu0
 LYM_NECRO_CNN_MODEL_PATH=/data01/shared/lehhou/u24_lymphocyte/data/models_cnn
+NEC_CNN_TRAINING_DATA=/data01/shared/lehhou/u24_lymphocyte/data/training_data_cnn
+NEC_CNN_TRAINING_DEVICE=gpu1
+NEC_CNN_PRED_DEVICE=gpu1
 
 # Load modules
 module load matlab/mcr-2014b

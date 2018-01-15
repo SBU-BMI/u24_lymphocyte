@@ -13,9 +13,11 @@ from PIL import Image
 from lasagne import layers
 from lasagne.nonlinearities import sigmoid, leaky_rectify
 from sklearn.metrics import roc_auc_score
+
 from data_aug_500x500 import data_aug
-from batch_norms import batch_norm
-from shape import ReshapeLayer
+sys.path.append('..')
+from common.shape import ReshapeLayer
+from common.batch_norms import batch_norm
 
 # Command arguments
 script_file_name = sys.argv[0][:-3];
@@ -29,8 +31,6 @@ n_time_duplicate = 10;   # Param for duplicating negative data
 blob_filter_size = 37;
 n_unit_hiddenlayer = 100;
 n_binaryclassifier = 1;
-#APS = 500;
-#PS = 200;
 batchsize = 2;
 num_epoch = 300;
 LearningRate = theano.shared(np.array(1e-3, dtype=np.float32));
@@ -41,8 +41,6 @@ else:
     aug_dim = 1;
 
 # Input dirs
-filename_mu = 'model_vals/deep_conv_autoencoder_spsparse_alt5_mu.pkl';
-filename_sigma = 'model_vals/deep_conv_autoencoder_spsparse_alt5_sigma.pkl';
 train_folder_list = [];
 test_folder_list = [];
 
@@ -371,7 +369,7 @@ def save_model(out_layer, mu, sigma, file_path):
 # epochno_validate:   #epoch to test on validate set
 def necrosis_train(existing_model, save_model_path, training_folder_list, validation_folder_list, APS, PS, epochno_model_save, epochno_validate):
     # Initialize variables
-    classification_model_file = save_model_path + "_e{}.pkl";
+    classification_model_file = save_model_path;
     # Initialize the model
     network, input_var, output_var, all_param = build_deconv_network(APS, PS);
     print "Finish build network structure";

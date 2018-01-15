@@ -33,7 +33,7 @@ BatchSize = 100;
 filename_cae_model = sys.argv[1] + '/cae_model.pkl';
 training_data_path = sys.argv[2];
 dataset_list = training_data_path + '/lym_data_list.txt';
-filename_output_model = sys.argv[3] + '/cnn_model.pkl';
+filename_output_model = sys.argv[3] + '/cnn_lym_model.pkl';
 
 mu = 0.6151888371;
 sigma = 0.2506813109;

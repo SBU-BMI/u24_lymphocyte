@@ -20,30 +20,35 @@ pred_file_path = sys.argv[1];
 pred_folder, pred_file_name = os.path.split(pred_file_path);
 filename = pred_file_name;
 heatmap_name = sys.argv[2];
-svs_img_folder = '/home/lym_pipeline/svs/';
 start_id_multiheat = 3;
 
-
-lines = [line.rstrip('\n') for line in open('../conf/variables.sh')];
+# Load configs from ../conf/variables.sh
 mongo_host = 'localhost';
 mongo_port = 27017;
 cancer_type = 'quip';
+svs_img_folder = '/home/lym_pipeline/svs/';
+lines = [line.rstrip('\n') for line in open('../conf/variables.sh')];
 for config_line in lines:
-    if (config_line.startswith('MONGODB_HOST')):
+    if (config_line.startswith('MONGODB_HOST=')):
         parts = config_line.split('=');
         mongo_host = parts[1];
         print "Mongodb host ", mongo_host;
 
-    if (config_line.startswith('MONGODB_PORT')):
+    if (config_line.startswith('MONGODB_PORT=')):
         parts = config_line.split('=');
         str_port = parts[1];
         mongo_port = int(str_port);
         print "Mongodb port ", mongo_port;
 
-    if (config_line.startswith('CANCER_TYPE')):
+    if (config_line.startswith('CANCER_TYPE=')):
         parts = config_line.split('=');
         cancer_type = parts[1];
         slide_type = cancer_type;
+
+    if (config_line.startswith('SVS_INPUT_PATH=')):
+        parts = config_line.split('=');
+        svs_img_folder = parts[1];
+        print "SVS image folder ", svs_img_folder;
 
 n_heat = (n_argv - start_id_multiheat) / 2;
 heat_list = [];

@@ -6,7 +6,7 @@ from PIL import Image
 
 APS = 100;
 TileFolder = sys.argv[1] + '/';
-heat_map_out = 'patch-level-color.txt';
+heat_map_out = sys.argv[2];
 
 def whiteness(png):
     wh = (np.std(png[:,:,0].flatten()) + np.std(png[:,:,1].flatten()) + np.std(png[:,:,2].flatten())) / 3.0;

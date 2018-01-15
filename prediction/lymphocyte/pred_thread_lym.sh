@@ -1,13 +1,16 @@
 #!/bin/bash
 
+source ../../conf/variables.sh
+
 FOLDER=$1
 # PARAL = [0, MAX_PARAL-1]
 PARAL=$2
 MAX_PARAL=$3
+DEVICE=$4
 
-DATA_FILE=patch-level-color.txt
+DATA_FILE=patch-level-lym.txt
 DONE_FILE=extraction_done.txt
-EXEC_FILE=color_stats.py
+EXEC_FILE=pred.py
 
 PRE_FILE_NUM=0
 while [ 1 ]; do
@@ -26,7 +29,8 @@ while [ 1 ]; do
                 echo ${files}/${DATA_FILE} exists
             else
                 echo ${files}/${DATA_FILE} generating
-                python -u ${EXEC_FILE} ${files} ${DATA_FILE}
+                THEANO_FLAGS="device=${DEVICE}" python -u ${EXEC_FILE} \
+                    ${files} ${LYM_NECRO_CNN_MODEL_PATH} ${DATA_FILE}
             fi
         fi
     done

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FOLDER=../patches/
+FOLDER=${1}
 
 PRED_VERSION=patch-level-lym.txt
 DIS_FOLDER=./patch-level-lym/
