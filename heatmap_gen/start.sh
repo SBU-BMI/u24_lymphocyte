@@ -15,6 +15,7 @@ bash combine_lym_necrosis_all.sh &> ${LOG_OUTPUT_FOLDER}/log.combine_lym_necrosi
 
 # Generate meta and heatmap files for high-res and low-res heatmaps.
 bash gen_all_json.sh &> ${LOG_OUTPUT_FOLDER}/log.gen_all_json.txt
+cp ./json/* ../data/heatmap_jsons/
 
 # Put all jsons to camicroscope
 bash upload_heatmaps.sh &> ${LOG_OUTPUT_FOLDER}/log.upload_heatmaps.txt

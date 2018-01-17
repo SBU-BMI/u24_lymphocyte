@@ -1,12 +1,15 @@
 import numpy as np
 import lasagne
 import theano
+import sys
 
 from lasagne import layers
 from lasagne.nonlinearities import sigmoid, rectify, leaky_rectify, identity
 from data_aug_necrosis import data_aug
-from batch_norms import batch_norm
-from shape import ReshapeLayer
+
+sys.path.append('..')
+from common.batch_norms import batch_norm
+from common.shape import ReshapeLayer
 
 
 # Parameters

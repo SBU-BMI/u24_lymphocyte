@@ -26,6 +26,7 @@ NEC_CNN_TRAINING_DEVICE=gpu1
 NEC_CNN_PRED_DEVICE=gpu1
 
 # Load modules
+module purge
 module load matlab/mcr-2014b
 module load mongodb/3.2.0
 module load jdk8/1.8.0_11

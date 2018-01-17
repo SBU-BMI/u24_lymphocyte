@@ -44,6 +44,7 @@ for config_line in lines:
         parts = config_line.split('=');
         cancer_type = parts[1];
         slide_type = cancer_type;
+        print "Cancer type ", cancer_type;
 
     if (config_line.startswith('SVS_INPUT_PATH=')):
         parts = config_line.split('=');
@@ -59,11 +60,11 @@ for h_id, h_name in enumerate(sys.argv[start_id_multiheat::2]):
 
 casename = filename.split('prediction-')[1].split('.low_res')[0];
 print "Casename ", casename;
-imgfilename = svs_img_folder + '/' + cancer_type + '/' + casename + '.svs';
+imgfilename = svs_img_folder + '/' + casename + '.svs';
 if not os.path.isfile(imgfilename):
-    imgfilename = svs_img_folder + '/' + cancer_type + '/'+ casename + '.tif';
+    imgfilename = svs_img_folder + '/' + casename + '.tif';
 if not os.path.isfile(imgfilename):
-    print "{}.svs/tif does not exist".format(svs_img_folder + '/' + cancer_type + '/' + casename);
+    print "{}.svs/tif does not exist".format(svs_img_folder + '/' + casename);
     print "Quit";
     sys.exit(0);
 print "Doing {}".format(imgfilename);
