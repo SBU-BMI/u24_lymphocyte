@@ -8,20 +8,35 @@ MONGODB_HOST=localhost
 MONGODB_PORT=27017
 HEATMAP_VERSION=lym_v1
 
-# Paths of data, log, input, and output
-JSON_OUTPUT_FOLDER=/data01/shared/lehhou/u24_lymphocyte/data/heatmap_jsons
-LOG_OUTPUT_FOLDER=/data01/shared/lehhou/u24_lymphocyte/data/log
-SVS_INPUT_PATH=/data01/shared/lehhou/u24_lymphocyte/data/svs
-PATCH_PATH=/data01/shared/lehhou/u24_lymphocyte/data/patches
+# Base directory
+BASE_DIR=/data01/shared/lehhou/u24_lymphocyte/
 
-CAE_TRAINING_DATA=/data01/shared/lehhou/u24_lymphocyte/data/training_data_cae
+# The username you want to download heatmaps from
+USERNAME=john.vanarnam@gmail.com
+# The list of case_ids you want to download heaetmaps from
+CASE_LIST=${BASE_DIR}/data/raw_marking_to_download_case_list/case_list.txt
+
+# Paths of data, log, input, and output
+JSON_OUTPUT_FOLDER=${BASE_DIR}/data/heatmap_jsons
+HEATMAP_TXT_OUTPUT_FOLDER=${BASE_DIR}/data/heatmap_txt
+LOG_OUTPUT_FOLDER=${BASE_DIR}/data/log
+SVS_INPUT_PATH=${BASE_DIR}/data/svs
+PATCH_PATH=${BASE_DIR}/data/patches
+RAW_MARKINGS_PATH=${BASE_DIR}/data/raw_marking_xy
+MODIFIED_HEATMAPS_PATH=${BASE_DIR}/data/modified_heatmaps
+GRAYSCALE_HEATMAPS_PATH=${BASE_DIR}/data/grayscale_heatmaps
+THRESHOLDED_HEATMAPS_PATH=${BASE_DIR}/data/thresholded_heatmaps
+PATCH_FROM_HEATMAP_PATH=${BASE_DIR}/data/patches_from_heatmap
+THRESHOLD_LIST=${BASE_DIR}/data/threshold_list/threshold_list.txt
+
+CAE_TRAINING_DATA=${BASE_DIR}/data/training_data_cae
 CAE_TRAINING_DEVICE=gpu0
-CAE_MODEL_PATH=/data01/shared/lehhou/u24_lymphocyte/data/models_cae
-LYM_CNN_TRAINING_DATA=/data01/shared/lehhou/u24_lymphocyte/data/training_data_cnn
+CAE_MODEL_PATH=${BASE_DIR}/data/models_cae
+LYM_CNN_TRAINING_DATA=${BASE_DIR}/data/training_data_cnn
 LYM_CNN_TRAINING_DEVICE=gpu0
 LYM_CNN_PRED_DEVICE=gpu0
-LYM_NECRO_CNN_MODEL_PATH=/data01/shared/lehhou/u24_lymphocyte/data/models_cnn
-NEC_CNN_TRAINING_DATA=/data01/shared/lehhou/u24_lymphocyte/data/training_data_cnn
+LYM_NECRO_CNN_MODEL_PATH=${BASE_DIR}/data/models_cnn
+NEC_CNN_TRAINING_DATA=${BASE_DIR}/data/training_data_cnn
 NEC_CNN_TRAINING_DEVICE=gpu1
 NEC_CNN_PRED_DEVICE=gpu1
 
