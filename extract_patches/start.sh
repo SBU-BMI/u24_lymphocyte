@@ -7,8 +7,8 @@ HEADER_LINE=${2}
 SLIDE_ID=`echo ${INPUT_FILE} | awk -F'/' '{print $NF}' | awk -F'.' '{print $1}'`
 SLIDE_USER=`echo ${INPUT_FILE} | awk -F'/' '{print $NF}'`
 
-#SLIDE_FOLDER=${SVS_INPUT_PATH}
-SLIDE_FOLDER=/data03/tcga_data/tumor/brca/
+SLIDE_FOLDER=${SVS_INPUT_PATH}
+#SLIDE_FOLDER=/data03/tcga_data/tumor/brca/
 SLIDE_FILE=`ls -1 ${SLIDE_FOLDER}/${SLIDE_ID}*.svs | head -n 1`
 
 if [ ! -f ${SLIDE_FILE} ]; then
