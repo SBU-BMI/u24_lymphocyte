@@ -1,6 +1,3 @@
-- patch extraction according to the predicted probability
-- patch labeling website
-- compute threshold based on patch labels
 - make data, models_training, models_prediction downloadable.
 - make a small svs folder downloadable.
 - use patch-level-color.txt in json-file-generation
