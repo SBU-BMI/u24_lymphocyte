@@ -22,6 +22,7 @@ HEATMAP_TXT_OUTPUT_FOLDER=${BASE_DIR}/data/heatmap_txt
 LOG_OUTPUT_FOLDER=${BASE_DIR}/data/log
 SVS_INPUT_PATH=${BASE_DIR}/data/svs
 PATCH_PATH=${BASE_DIR}/data/patches
+PATCH_SAMPLING_LIST_PATH=${BASE_DIR}/data/patch_sample_list
 RAW_MARKINGS_PATH=${BASE_DIR}/data/raw_marking_xy
 MODIFIED_HEATMAPS_PATH=${BASE_DIR}/data/modified_heatmaps
 TUMOR_HEATMAPS_PATH=${BASE_DIR}/data/tumor_labeled_heatmaps
