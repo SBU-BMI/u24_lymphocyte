@@ -22,9 +22,9 @@ MARKING_FOLDER=${RAW_MARKINGS_PATH}
 # Path contains the svs slides
 # This is just used for getting the height and width
 # of the slides
-#SLIDES=${SVS_INPUT_PATH}
+SLIDES=${SVS_INPUT_PATH}
 # If you want to test this script, use the following configuration:
-SLIDES=/data03/tcga_data/tumor/brca/
+#SLIDES=/data03/tcga_data/tumor/brca/
 
 for files in ${MARKING_FOLDER}/*_weight.txt; do
     # Get slide id

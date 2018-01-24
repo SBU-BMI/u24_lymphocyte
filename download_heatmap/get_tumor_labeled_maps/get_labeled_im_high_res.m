@@ -1,4 +1,4 @@
-function tumor_im = get_labeled_im_high_res(mark_file, tot_width, tot_height, patch_size)
+function tumor_im = get_labeled_im_high_res(mark_file, tot_width, tot_height, patch_size, PosLabel, NegLabel)
 
 im_width = round(tot_width/patch_size);
 im_height = round(tot_height/patch_size);
@@ -16,7 +16,7 @@ for iter = 1:length(m_type)
     ts = tses{iter};
     po = str2num(poly{iter});
 
-    if (strcmp(mt, 'TumorPos'))
+    if (strcmp(mt, PosLabel))
         if isempty(cur_c) || ...
            (cur_lab == 1 && ...
             abs(str2num(time_stamp) - str2num(ts)) < 10 && ...
@@ -33,7 +33,7 @@ for iter = 1:length(m_type)
         end
         cur_lab = 1;
         time_stamp = ts;
-    elseif (strcmp(mt, 'TumorNeg'))
+    elseif (strcmp(mt, NegLabel))
         if isempty(cur_c) || ...
            (cur_lab == 0 && ...
             abs(str2num(time_stamp) - str2num(ts)) < 10 && ...
