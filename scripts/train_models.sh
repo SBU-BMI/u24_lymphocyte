@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ../
 cd training/autoencoder
 bash start_cae_training.sh
 cd ../..

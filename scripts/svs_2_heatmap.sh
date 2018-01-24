@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ../
 source ./conf/variables.sh
 
 cd patch_extraction

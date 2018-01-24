@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ../
 cd ./patch_sampling
 bash start.sh &> ${LOG_OUTPUT_FOLDER}/log.patch_sampling.txt
 cd ..
