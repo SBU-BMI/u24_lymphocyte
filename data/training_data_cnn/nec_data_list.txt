@@ -1,0 +1,2 @@
+small_nec_cnn_val_data
+small_nec_cnn_train_data
