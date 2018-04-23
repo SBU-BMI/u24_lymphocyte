@@ -20,13 +20,13 @@ pred_file_path = sys.argv[1];
 pred_folder, pred_file_name = os.path.split(pred_file_path);
 filename = pred_file_name;
 heatmap_name = sys.argv[2];
-start_id_multiheat = 3;
+svs_img_folder = sys.argv[3];
+start_id_multiheat = 4;
 
 # Load configs from ../conf/variables.sh
 mongo_host = 'localhost';
 mongo_port = 27017;
 cancer_type = 'quip';
-svs_img_folder = '/home/lym_pipeline/svs/';
 lines = [line.rstrip('\n') for line in open('../conf/variables.sh')];
 for config_line in lines:
     if (config_line.startswith('MONGODB_HOST=')):
@@ -45,11 +45,6 @@ for config_line in lines:
         cancer_type = parts[1];
         slide_type = cancer_type;
         print "Cancer type ", cancer_type;
-
-    if (config_line.startswith('SVS_INPUT_PATH=')):
-        parts = config_line.split('=');
-        svs_img_folder = parts[1];
-        print "SVS image folder ", svs_img_folder;
 
 n_heat = (n_argv - start_id_multiheat) / 2;
 heat_list = [];
@@ -208,4 +203,3 @@ with open(metafile, 'w') as mf:
     dict_meta['randval'] = random.uniform(0,1);
 
     json.dump(dict_meta, mf, default=json_util.default);
-
