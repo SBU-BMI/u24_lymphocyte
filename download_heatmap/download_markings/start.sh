@@ -6,6 +6,16 @@ source ../../conf/variables.sh
 
 # Specify which cancertype, username, and the list
 # of slides' heatmap you want to download.
+# For example:
+#     ctype=BRCA
+#     username=rajarsi.gupta@stonybrook.edu
+#     case_list=/DATA/PATH/case_list.txt
+# The content in case_list:
+#     cat /DATA/PATH/case_list.txt
+#     TCGA-05-4244-01Z-00-DX1
+#     TCGA-05-4245-01Z-00-DX1
+#     TCGA-05-4249-01Z-00-DX1
+#     ...
 ctype=${CANCER_TYPE}
 username=${USERNAME}
 case_list=${CASE_LIST}
