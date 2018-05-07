@@ -17,13 +17,13 @@ from scipy import misc
 from PIL import Image
 from lasagne import init
 from math import floor
-
-from shape import ReshapeLayer
-from batch_norms import batch_norm, SoftThresPerc
-from data_aug import data_aug
-from ch_inner_prod import ChInnerProd, ChInnerProdMerge
-
 from sklearn.metrics import mean_squared_error, accuracy_score, hamming_loss, roc_curve, auc
+
+from data_aug import data_aug
+sys.path.append('..')
+from common.shape import ReshapeLayer
+from common.batch_norms import batch_norm, SoftThresPerc
+from common.ch_inner_prod import ChInnerProd, ChInnerProdMerge
 
 APS = 100;
 PS = 100;
@@ -31,13 +31,11 @@ TileFolder = sys.argv[1] + '/';
 LearningRate = theano.shared(np.array(5e-3, dtype=np.float32));
 BatchSize = 80;
 
-filename_mu = 'models/mu.pkl';
-filename_sigma = 'models/sigma.pkl';
-heat_map_out = 'patch-level-lym.txt';
-CNNModel = 'models/cnn_model.pkl';
+CNNModel = sys.argv[2] + '/cnn_lym_model.pkl';
+heat_map_out = sys.argv[3];
 
-mu = pickle.load(open(filename_mu, 'rb'));
-sigma = pickle.load(open(filename_sigma, 'rb'));
+mu = 0.6151888371;
+sigma = 0.2506813109;
 aug_fea_n = 1;
 
 
