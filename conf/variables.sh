@@ -4,7 +4,7 @@
 DEFAULT_OBJ=20
 DEFAULT_MPP=0.5
 CANCER_TYPE=quip
-MONGODB_HOST=localhost
+MONGODB_HOST=quip3.bmi.stonybrook.edu
 MONGODB_PORT=27017
 HEATMAP_VERSION=lym_v1
 
@@ -46,7 +46,7 @@ NEC_CNN_PRED_DEVICE=gpu1
 
 # Load modules
 module purge
-module load matlab/mcr-2014b
+module load matlab
 module load mongodb/3.2.0
 module load jdk8/1.8.0_11
 module load openslide/3.4.0

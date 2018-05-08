@@ -8,7 +8,7 @@ IN_FOLDER=${SVS_INPUT_PATH}
 OUT_FOLDER=${PATCH_PATH}
 
 LINE_N=0
-for files in ${IN_FOLDER}/*; do
+for files in ${IN_FOLDER}/*.*; do
     LINE_N=$((LINE_N+1))
     if [ $((LINE_N % MAX_PARA)) -ne ${COD_PARA} ]; then continue; fi
 
