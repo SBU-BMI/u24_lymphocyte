@@ -2,8 +2,8 @@
 
 source ../../conf/variables.sh
 
-# This script takes input from ./download_markings/data/
-# Check out ./download_markings/main.sh on how to prepare the input files
+# This script takes input from ${RAW_MARKINGS_PATH}/
+# Check out ../download_markings/start.sh on how to prepare the input files
 
 # Input folder to the downloaded markings
 # This script will merge the markings
@@ -14,17 +14,15 @@ source ../../conf/variables.sh
 #   1. files contain markings
 #   2. files have selected lym&necrosis&smoothness weights
 # For example:
-#   ${RAW_MARKINGS_PATH}/TCGA-NJ-A55O-01Z-00-DX1_rajarsi.gupta_mark.txt
-#   ${RAW_MARKINGS_PATH}/TCGA-NJ-A55O-01Z-00-DX1_rajarsi.gupta_weight.txt
-# Checkout ./download_markings/main.sh on how to prepare those input files
+#   ${RAW_MARKINGS_PATH}/TCGA-NJ-A55O-01Z-00-DX1_rajarsi.gupta__x__mark.txt
+#   ${RAW_MARKINGS_PATH}/TCGA-NJ-A55O-01Z-00-DX1_rajarsi.gupta__x__weight.txt
+# Checkout ../download_markings/main.sh on how to prepare those input files
 MARKING_FOLDER=${RAW_MARKINGS_PATH}
 
 # Path contains the svs slides
 # This is just used for getting the height and width
 # of the slides
 SLIDES=${SVS_INPUT_PATH}
-# If you want to test this script, use the following configuration:
-#SLIDES=/data03/tcga_data/tumor/brca/
 
 # Locations of unmodified heatmaps
 # The filenames of the unmodifed heatmaps should be:
@@ -32,14 +30,12 @@ SLIDES=${SVS_INPUT_PATH}
 # For example:
 #   prediction-TCGA-NJ-A55O-01Z-00-DX1
 HEAT_LOC=${HEATMAP_TXT_OUTPUT_FOLDER}
-# If you want to test this script, use the following configuration:
-#HEAT_LOC=/data08/shared/lehhou/heatmaps_v2/gened-all-luad-brca/
 
 for files in ${MARKING_FOLDER}/*_weight.txt; do
     # Get slide id
-    SVS=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'_' '{print $1}'`
+    SVS=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'__x__' '{print $1}'`
     # Get user name
-    USER=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'_' '{print $2}'`
+    USER=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'__x__' '{print $2}'`
 
     # Get corresponding weight and marking files
     WEIGHT=${files}

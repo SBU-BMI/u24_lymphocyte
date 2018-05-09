@@ -54,6 +54,7 @@ module load extlibs/1.0.0
 module load ITK/4.6.1
 module load cuda75
 module load anaconda2/4.4.0
+module load imagemagick/7.0.7
 export PATH=/home/lehhou/git/bin/:${PATH}
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/cm/shared/apps/anaconda2/current/lib/"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/cm/shared/apps/cuda75/toolkit/7.5.18/lib64/"
