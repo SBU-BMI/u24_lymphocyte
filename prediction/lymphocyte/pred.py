@@ -29,7 +29,7 @@ APS = 100;
 PS = 100;
 TileFolder = sys.argv[1] + '/';
 LearningRate = theano.shared(np.array(5e-3, dtype=np.float32));
-BatchSize = 80;
+BatchSize = 192;
 
 CNNModel = sys.argv[2] + '/cnn_lym_model.pkl';
 heat_map_out = sys.argv[3];
@@ -42,6 +42,20 @@ aug_fea_n = 1;
 def whiteness(png):
     wh = (np.std(png[:,:,0].flatten()) + np.std(png[:,:,1].flatten()) + np.std(png[:,:,2].flatten())) / 3.0;
     return wh;
+
+
+def iterate_minibatches(inputs, augs, targets):
+    if inputs.shape[0] <= BatchSize:
+        yield inputs, augs, targets;
+        return;
+
+    start_idx = 0;
+    for start_idx in range(0, len(inputs) - BatchSize + 1, BatchSize):
+        excerpt = slice(start_idx, start_idx + BatchSize);
+        yield inputs[excerpt], augs[excerpt], targets[excerpt];
+    if start_idx < len(inputs) - BatchSize:
+        excerpt = slice(start_idx + BatchSize, len(inputs));
+        yield inputs[excerpt], augs[excerpt], targets[excerpt];
 
 
 def load_data(todo_list, rind):
@@ -102,17 +116,27 @@ def from_output_to_pred(output):
 def multi_win_during_val(val_fn, inputs, augs, targets):
     for idraw in [-1,]:
         for jdraw in [-1,]:
-            inpt_multiwin = data_aug(inputs, mu, sigma, deterministic=True, idraw=idraw, jdraw=jdraw);
-            err_pat, output_pat = val_fn(inpt_multiwin, augs, targets);
+            ########################
+            # Break batch into mini-batches
+            output_pat = np.zeros((inputs.shape[0], 1), dtype=np.float32);
+            ncase = 0;
+            for batch in iterate_minibatches(inputs, augs, targets):
+                inp, aug, tar = batch;
+                _, outp = val_fn(
+                        data_aug(inp, mu, sigma, deterministic=False, idraw=idraw, jdraw=jdraw),
+                        aug, tar);
+                output_pat[ncase:ncase+len(outp)] = outp;
+                ncase += len(outp);
+            # Break batch into mini-batches
+            ########################
+
             if 'weight' in locals():
                 weight += 1.0;
-                err += err_pat;
                 output += output_pat;
             else:
                 weight = 1.0;
-                err = err_pat;
                 output = output_pat;
-    return err/weight, output/weight;
+    return output/weight;
 
 
 def val_fn_epoch_on_disk(classn, val_fn):
@@ -129,7 +153,7 @@ def val_fn_epoch_on_disk(classn, val_fn):
         augs = get_aug_feas(inputs);
         targets = np.zeros((inputs.shape[0], classn), dtype=np.int32);
 
-        err, output = multi_win_during_val(val_fn, inputs, augs, targets);
+        output = multi_win_during_val(val_fn, inputs, augs, targets);
         all_or[n1:n1+len(output)] = output;
         all_inds[n2:n2+len(inds)] = inds;
         all_coor[n3:n3+len(coor)] = coor;
