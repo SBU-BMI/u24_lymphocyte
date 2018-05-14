@@ -25,9 +25,7 @@ while [ 1 ]; do
         if [ $((LINE_N % MAX_PARAL)) -ne ${PARAL} ]; then continue; fi
 
         if [ -f ${files}/${DONE_FILE} ]; then
-            if [ -f ${files}/${DATA_FILE} ]; then
-                echo ${files}/${DATA_FILE} exists
-            else
+            if [ ! -f ${files}/${DATA_FILE} ]; then
                 echo ${files}/${DATA_FILE} generating
                 THEANO_FLAGS="device=${DEVICE}" python -u ${EXEC_FILE} \
                     ${files} ${LYM_NECRO_CNN_MODEL_PATH} ${DATA_FILE}
