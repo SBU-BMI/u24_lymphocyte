@@ -29,7 +29,7 @@ APS = 100;
 PS = 100;
 TileFolder = sys.argv[1] + '/';
 LearningRate = theano.shared(np.array(5e-3, dtype=np.float32));
-BatchSize = 192;
+BatchSize = 96;
 
 CNNModel = sys.argv[2] + '/cnn_lym_model.pkl';
 heat_map_out = sys.argv[3];
@@ -59,8 +59,8 @@ def iterate_minibatches(inputs, augs, targets):
 
 
 def load_data(todo_list, rind):
-    X = np.zeros(shape=(BatchSize*20, 3, APS, APS), dtype=np.float32);
-    inds = np.zeros(shape=(BatchSize*20,), dtype=np.int32);
+    X = np.zeros(shape=(BatchSize*40, 3, APS, APS), dtype=np.float32);
+    inds = np.zeros(shape=(BatchSize*40,), dtype=np.int32);
     coor = np.zeros(shape=(1000000, 2), dtype=np.int32);
 
     xind = 0;
