@@ -45,7 +45,7 @@ awk -v header=${HEADER_LINE} 'NR>header' ${INPUT_FILE} | while read line; do
             ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-original_size.png \
             -resize ${RESIZE}x${RESIZE} \
             ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png
-        echo ${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png ${label} >> ${PATCH_FROM_HEATMAP_PATH}/label.txt
+        echo ${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png ${label} ${SLIDE_ID} >> ${PATCH_FROM_HEATMAP_PATH}/label.txt
     fi
 done
 
