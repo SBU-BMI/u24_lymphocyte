@@ -17,7 +17,7 @@ for i = 1:length(xs)
     if (xs(i)-labs < 1 || ys(i)-labs < 1 || xs(i)+labe > im_width || ys(i)+labe > im_height)
         continue;
     end
-    lab_patch = im(xs(i)-labs:xs(i)+labe, ys(i)-labs:ys(i)+labe);
+    lab_patch = im(ys(i)-labs:ys(i)+labe, xs(i)-labs:xs(i)+labe);
 
     fprintf(fid, '%d,%d,%d,%d,%d\n', ...
         int64((xs(i)-labs-1)/im_width*width+1), int64((ys(i)-labs-1)/im_height*height+1), ...

@@ -74,8 +74,8 @@ def load_data_folder(classn, folder, is_train):
         img = line.split()[0];
         lab = np.array([int(int(line.split()[1]) > 0)]);
         png = np.array(Image.open(folder + '/' + img).convert('RGB')).transpose();
-        if (png.shape[1] == 500):
-            png = png[:, 100:-100, 100:-100];
+        if (png.shape[1] >= 400):
+            png = png[:, 100:400, 100:400];
         X[nline], y[nline] = png, lab;
         nline += 1;
 

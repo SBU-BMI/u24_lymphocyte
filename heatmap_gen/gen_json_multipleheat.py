@@ -20,7 +20,7 @@ pred_file_path = sys.argv[1];
 pred_folder, pred_file_name = os.path.split(pred_file_path);
 filename = pred_file_name;
 heatmap_name = sys.argv[2];
-svs_img_folder = sys.argv[3];
+svs_img_folder=sys.argv[3];
 start_id_multiheat = 4;
 
 # Load configs from ../conf/variables.sh
@@ -67,10 +67,15 @@ print "Doing {}".format(imgfilename);
 
 # Retrieve case_id and subject_id from mongodb
 # Read mongodb port
-mongo_client = MongoClient(mongo_host, mongo_port);
-db = mongo_client['u24_' + cancer_type].images;
-query_filename = imgfilename;
-db_result = db.find_one({"filename":query_filename});
+
+#mongo_client = MongoClient(mongo_host, mongo_port);
+#db = mongo_client[cancer_type].images;
+#query_filename = imgfilename;
+#db_result = db.find_one({"filename":query_filename});
+#caseid = db_result['case_id'];
+#subjectid = db_result['subject_id'];
+caseid = casename;
+subjectid = casename;
 
 
 heatmapfile = './json/heatmap_' + filename.split('prediction-')[1] + '.json';
@@ -80,9 +85,6 @@ oslide = openslide.OpenSlide(imgfilename);
 slide_width_openslide = oslide.dimensions[0];
 slide_height_openslide = oslide.dimensions[1];
 
-caseid = db_result['case_id'];
-subjectid = db_result['subject_id'];
-cancertype = slide_type;
 
 print "Loaded caseid and subjectid ", caseid, subjectid;
 

@@ -15,13 +15,14 @@ if [ ! -f ${SLIDE_FILE} ]; then
     exit 1
 fi
 
+rm -f ${PATCH_FROM_HEATMAP_PATH}/label.txt
 awk -v header=${HEADER_LINE} 'NR>header' ${INPUT_FILE} | while read line; do
-    #ext_x0=`  echo ${line} | awk -F',' '{print int($1-2*($3-$1))}'`
-    #ext_y0=`  echo ${line} | awk -F',' '{print int($2-2*($4-$2))}'`
-    #ext_size=`echo ${line} | awk -F',' '{print int(5*($3-$1))}'`
-    ext_x0=`  echo ${line} | awk -F',' '{print int($1)}'`
-    ext_y0=`  echo ${line} | awk -F',' '{print int($2)}'`
-    ext_size=`echo ${line} | awk -F',' '{print int($3-$1)}'`
+    ext_x0=`  echo ${line} | awk -F',' '{print int($1-2*($3-$1))}'`
+    ext_y0=`  echo ${line} | awk -F',' '{print int($2-2*($4-$2))}'`
+    ext_size=`echo ${line} | awk -F',' '{print int(5*($3-$1))}'`
+    #ext_x0=`  echo ${line} | awk -F',' '{print int($1)}'`
+    #ext_y0=`  echo ${line} | awk -F',' '{print int($2)}'`
+    #ext_size=`echo ${line} | awk -F',' '{print int($3-$1)}'`
     label=`echo ${line} | awk -F',' '{print $NF}'`
 
     if [ ${ext_x0} -le 0 ]; then
@@ -34,15 +35,18 @@ awk -v header=${HEADER_LINE} 'NR>header' ${INPUT_FILE} | while read line; do
         continue;
     fi
 
-    RESIZE=`bash get_mpp_w_h.sh ${SLIDE_FILE} | awk -v s=${ext_size} '{print int(s*0.50/$1)}'`
+    RESIZE=`bash get_mpp_w_h.sh ${SLIDE_FILE} | awk -v s=${ext_size} '{print int(s*$1/0.50+0.5)}'`
+    #RESIZE=500
     openslide-write-png \
         ${SLIDE_FILE} ${ext_x0} ${ext_y0} 0 ${ext_size} ${ext_size} \
         ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-original_size.png
-    convert \
-        ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-original_size.png \
-        -resize ${RESIZE}x${RESIZE} \
-        ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png
-    echo ${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size} ${label} > ${PATCH_FROM_HEATMAP_PATH}/label.txt
+    if [ $? -eq 0 ]; then
+        convert \
+            ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-original_size.png \
+            -resize ${RESIZE}x${RESIZE} \
+            ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png
+        echo ${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png ${label} >> ${PATCH_FROM_HEATMAP_PATH}/label.txt
+    fi
 done
 
 exit 0

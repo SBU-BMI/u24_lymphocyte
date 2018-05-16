@@ -29,7 +29,7 @@ APS = 100;
 PS = 100;
 TileFolder = sys.argv[1] + '/';
 LearningRate = theano.shared(np.array(5e-3, dtype=np.float32));
-BatchSize = 100;
+BatchSize = 96;
 
 CNNModel = sys.argv[2] + '/cnn_lym_model.pkl';
 heat_map_out = sys.argv[3];
@@ -44,39 +44,30 @@ def whiteness(png):
     return wh;
 
 
-def iterate_minibatches(inputs, augs, targets, batchsize, shuffle=False):
-    assert len(inputs) == len(targets);
-    assert len(inputs) == len(augs);
-    if inputs.shape[0] <= batchsize:
+def iterate_minibatches(inputs, augs, targets):
+    if inputs.shape[0] <= BatchSize:
         yield inputs, augs, targets;
         return;
 
-    if shuffle:
-        indices = np.arange(len(inputs));
-        np.random.shuffle(indices);
     start_idx = 0;
-    for start_idx in range(0, len(inputs) - batchsize + 1, batchsize):
-        if shuffle:
-            excerpt = indices[start_idx:start_idx + batchsize];
-        else:
-            excerpt = slice(start_idx, start_idx + batchsize);
+    for start_idx in range(0, len(inputs) - BatchSize + 1, BatchSize):
+        excerpt = slice(start_idx, start_idx + BatchSize);
         yield inputs[excerpt], augs[excerpt], targets[excerpt];
-    if start_idx < len(inputs) - batchsize:
-        if shuffle:
-            excerpt = indices[start_idx + batchsize : len(inputs)];
-        else:
-            excerpt = slice(start_idx + batchsize, len(inputs));
+    if start_idx < len(inputs) - BatchSize:
+        excerpt = slice(start_idx + BatchSize, len(inputs));
         yield inputs[excerpt], augs[excerpt], targets[excerpt];
 
 
-def load_data():
-    X = np.zeros(shape=(800000, 3, APS, APS), dtype=np.float32);
-    inds = np.zeros(shape=(800000,), dtype=np.int32);
-    coor = np.zeros(shape=(1000000, 2), dtype=np.int32);
+def load_data(todo_list, rind):
+    X = np.zeros(shape=(BatchSize*40, 3, APS, APS), dtype=np.float32);
+    inds = np.zeros(shape=(BatchSize*40,), dtype=np.int32);
+    coor = np.zeros(shape=(20000000, 2), dtype=np.int32);
 
     xind = 0;
+    lind = 0;
     cind = 0;
-    for fn in os.listdir(TileFolder):
+    for fn in todo_list:
+        lind += 1;
         full_fn = TileFolder + '/' + fn;
         if not os.path.isfile(full_fn):
             continue;
@@ -98,19 +89,22 @@ def load_data():
 
                 if (whiteness(png[y:y+APS, x:x+APS, :]) >= 12):
                     X[xind, :, :, :] = png[y:y+APS, x:x+APS, :].transpose();
-                    inds[xind] = cind;
+                    inds[xind] = rind;
                     xind += 1;
 
                 coor[cind, 0] = np.int32(x_off + (x + APS/2) * svs_pw / png_pw);
                 coor[cind, 1] = np.int32(y_off + (y + APS/2) * svs_pw / png_pw);
                 cind += 1;
+                rind += 1;
+
+        if xind >= BatchSize:
+            break;
 
     X = X[0:xind];
     inds = inds[0:xind];
     coor = coor[0:cind];
 
-    print "Data Loaded", X.shape, inds.shape, coor.shape;
-    return X, inds, coor;
+    return todo_list[lind:], X, inds, coor, rind;
 
 
 def from_output_to_pred(output):
@@ -122,43 +116,57 @@ def from_output_to_pred(output):
 def multi_win_during_val(val_fn, inputs, augs, targets):
     for idraw in [-1,]:
         for jdraw in [-1,]:
-            inpt_multiwin = data_aug(inputs, mu, sigma, deterministic=True, idraw=idraw, jdraw=jdraw);
-            err_pat, output_pat = val_fn(inpt_multiwin, augs, targets);
+            ########################
+            # Break batch into mini-batches
+            output_pat = np.zeros((inputs.shape[0], 1), dtype=np.float32);
+            ncase = 0;
+            for batch in iterate_minibatches(inputs, augs, targets):
+                inp, aug, tar = batch;
+                _, outp = val_fn(
+                        data_aug(inp, mu, sigma, deterministic=False, idraw=idraw, jdraw=jdraw),
+                        aug, tar);
+                output_pat[ncase:ncase+len(outp)] = outp;
+                ncase += len(outp);
+            # Break batch into mini-batches
+            ########################
+
             if 'weight' in locals():
                 weight += 1.0;
-                err += err_pat;
                 output += output_pat;
             else:
                 weight = 1.0;
-                err = err_pat;
                 output = output_pat;
-    return err/weight, output/weight;
+    return output/weight;
 
 
-def val_fn_epoch(classn, val_fn, X_val, a_val, y_val):
-    val_err = 0;
-    Pr = np.empty(shape = (1000000, classn), dtype = np.int32);
-    Or = np.empty(shape = (1000000, classn), dtype = np.float32);
-    Tr = np.empty(shape = (1000000, classn), dtype = np.int32);
-    val_batches = 0;
-    nline = 0;
-    for batch in iterate_minibatches(X_val, a_val, y_val, BatchSize, shuffle = False):
-        inputs, augs, targets = batch;
-        err, output = multi_win_during_val(val_fn, inputs, augs, targets);
-        pred = from_output_to_pred(output);
-        val_err += err;
-        Pr[nline:nline+len(output)] = pred;
-        Or[nline:nline+len(output)] = output;
-        Tr[nline:nline+len(output)] = targets;
-        val_batches += 1;
-        nline += len(output);
-    Pr = Pr[:nline];
-    Or = Or[:nline];
-    Tr = Tr[:nline];
-    val_err = val_err / val_batches;
-    val_ham = (1 - hamming_loss(Tr, Pr));
-    val_acc = accuracy_score(Tr, Pr);
-    return val_err, val_ham, val_acc, Pr, Or, Tr;
+def val_fn_epoch_on_disk(classn, val_fn):
+    all_or = np.zeros(shape=(20000000, classn), dtype=np.float32);
+    all_inds = np.zeros(shape=(20000000,), dtype=np.int32);
+    all_coor = np.zeros(shape=(20000000, 2), dtype=np.int32);
+    rind = 0;
+    n1 = 0;
+    n2 = 0;
+    n3 = 0;
+    todo_list = os.listdir(TileFolder);
+    while len(todo_list) > 0:
+        todo_list, inputs, inds, coor, rind = load_data(todo_list, rind);
+        if len(inputs) == 0:
+            break;
+        augs = get_aug_feas(inputs);
+        targets = np.zeros((inputs.shape[0], classn), dtype=np.int32);
+
+        output = multi_win_during_val(val_fn, inputs, augs, targets);
+        all_or[n1:n1+len(output)] = output;
+        all_inds[n2:n2+len(inds)] = inds;
+        all_coor[n3:n3+len(coor)] = coor;
+        n1 += len(output);
+        n2 += len(inds);
+        n3 += len(coor);
+
+    all_or = all_or[:n1];
+    all_inds = all_inds[:n2];
+    all_coor = all_coor[:n3];
+    return all_or, all_inds, all_coor;
 
 
 def confusion_matrix(Or, Tr, thres):
@@ -279,17 +287,12 @@ def get_aug_feas(X):
 
 
 def split_validation(classn):
-    X, inds, coor = load_data();
-
     network, new_params, input_var, aug_var, target_var = build_network_from_ae(classn);
     train_fn, new_params_train_fn, val_fn = make_training_functions(network, new_params, input_var, aug_var, target_var);
     layers.set_all_param_values(network, pickle.load(open(CNNModel, 'rb')));
 
-    A = get_aug_feas(X);
-    Y = np.zeros((X.shape[0], classn), dtype=np.int32);
-
     # Testing
-    _, _, _, _, Or, _ = val_fn_epoch(classn, val_fn, X, A, Y);
+    Or, inds, coor = val_fn_epoch_on_disk(classn, val_fn);
     Or_all = np.zeros(shape=(coor.shape[0],), dtype=np.float32);
     Or_all[inds] = Or[:, 0];
 
@@ -315,4 +318,3 @@ def main():
 
 if __name__ == "__main__":
     main();
-
