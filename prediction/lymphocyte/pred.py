@@ -61,7 +61,7 @@ def iterate_minibatches(inputs, augs, targets):
 def load_data(todo_list, rind):
     X = np.zeros(shape=(BatchSize*40, 3, APS, APS), dtype=np.float32);
     inds = np.zeros(shape=(BatchSize*40,), dtype=np.int32);
-    coor = np.zeros(shape=(1000000, 2), dtype=np.int32);
+    coor = np.zeros(shape=(20000000, 2), dtype=np.int32);
 
     xind = 0;
     lind = 0;
@@ -140,9 +140,9 @@ def multi_win_during_val(val_fn, inputs, augs, targets):
 
 
 def val_fn_epoch_on_disk(classn, val_fn):
-    all_or = np.zeros(shape=(1000000, classn), dtype=np.float32);
-    all_inds = np.zeros(shape=(1000000,), dtype=np.int32);
-    all_coor = np.zeros(shape=(1000000, 2), dtype=np.int32);
+    all_or = np.zeros(shape=(20000000, classn), dtype=np.float32);
+    all_inds = np.zeros(shape=(20000000,), dtype=np.int32);
+    all_coor = np.zeros(shape=(20000000, 2), dtype=np.int32);
     rind = 0;
     n1 = 0;
     n2 = 0;
