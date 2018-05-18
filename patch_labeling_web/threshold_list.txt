@@ -1,0 +1,5 @@
+slide1 0.7 0.5
+slide2 0.4 0.7
+slide3 0.7 0.5
+slide4 0.4 0.7
+slide5 0.6 0.4
