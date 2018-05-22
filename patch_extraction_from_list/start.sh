@@ -17,12 +17,12 @@ fi
 
 rm -f ${PATCH_FROM_HEATMAP_PATH}/label.txt
 awk -v header=${HEADER_LINE} 'NR>header' ${INPUT_FILE} | while read line; do
-    #ext_x0=`  echo ${line} | awk -F',' '{print int($1-2*($3-$1))}'`
-    #ext_y0=`  echo ${line} | awk -F',' '{print int($2-2*($4-$2))}'`
-    #ext_size=`echo ${line} | awk -F',' '{print int(5*($3-$1))}'`
-    ext_x0=`  echo ${line} | awk -F',' '{print int($1)}'`
-    ext_y0=`  echo ${line} | awk -F',' '{print int($2)}'`
-    ext_size=`echo ${line} | awk -F',' '{print int($3-$1)}'`
+    ext_x0=`  echo ${line} | awk -F',' '{print int($1-2*($3-$1))}'`
+    ext_y0=`  echo ${line} | awk -F',' '{print int($2-2*($4-$2))}'`
+    ext_size=`echo ${line} | awk -F',' '{print int(5*($3-$1))}'`
+    #ext_x0=`  echo ${line} | awk -F',' '{print int($1)}'`
+    #ext_y0=`  echo ${line} | awk -F',' '{print int($2)}'`
+    #ext_size=`echo ${line} | awk -F',' '{print int($3-$1)}'`
     label=`echo ${line} | awk -F',' '{print $NF}'`
 
     if [ ${ext_x0} -le 0 ]; then
