@@ -1,7 +1,7 @@
 function get_tumor_pos_neg_map(svs_name, username, width, height, mark_file)
 
-PosLabel = 'VesselNormal';
-NegLabel = 'NoneExist';
+PosLabel = 'LymPos';
+NegLabel = 'LymNeg';
 HeatPixelSize = 4;
 PatchHeatPixelN = 25;
 PatchSampleRate = 50;
