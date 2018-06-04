@@ -15,6 +15,12 @@ for iter = 1:length(m_type)
     mt = m_type{iter};
     ts = tses{iter};
     po = str2num(poly{iter});
+    
+    % ignore rows where there are no x&y values
+    if length(po) < 1
+        disp(['Empty notations: ' num2str(iter)])
+        continue;
+    end
 
     if (strcmp(mt, PosLabel))
         if isempty(cur_c) || ...
