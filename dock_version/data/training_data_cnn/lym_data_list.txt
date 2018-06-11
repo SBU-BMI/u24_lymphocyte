@@ -1,0 +1,2 @@
+small_lym_cnn_val_data
+small_lym_cnn_train_data
