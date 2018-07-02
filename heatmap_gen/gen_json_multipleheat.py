@@ -205,4 +205,3 @@ with open(metafile, 'w') as mf:
     dict_meta['randval'] = random.uniform(0,1);
 
     json.dump(dict_meta, mf, default=json_util.default);
-
