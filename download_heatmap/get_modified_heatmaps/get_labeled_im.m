@@ -71,6 +71,12 @@ for iter = 1:length(m_type)
     mw = m_width(iter);
     ts = tses{iter};
     po = str2num(poly{iter});
+    
+    % ignore rows where there are no x&y values
+    if length(po) < 1
+        disp(['Empty notations: ' num2str(iter)])
+        continue;
+    end
 
     if (strcmp(mt, 'LymPos'))
         lab = 1;
@@ -226,6 +232,10 @@ else
         for bj = -3:3
             norm_x_add = norm_x + bi * norm_step_x;
             norm_y_add = norm_y + bj * norm_step_y;
+            if norm_x_add < 0 | norm_y_add < 0
+                continue;
+            end
+            
             im = marking_one_step(im, lab, norm_x_add, norm_y_add, calc_width, calc_height, tot_width, tot_height);
         end
     end
