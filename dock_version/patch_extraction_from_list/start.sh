@@ -15,7 +15,7 @@ if [ ! -f ${SLIDE_FILE} ]; then
     exit 1
 fi
 
-rm -f ${PATCH_FROM_HEATMAP_PATH}/label.txt
+# rm -f ${PATCH_FROM_HEATMAP_PATH}/label.txt
 awk -v header=${HEADER_LINE} 'NR>header' ${INPUT_FILE} | while read line; do
     ext_x0=`  echo ${line} | awk -F',' '{print int($1-2*($3-$1))}'`
     ext_y0=`  echo ${line} | awk -F',' '{print int($2-2*($4-$2))}'`
