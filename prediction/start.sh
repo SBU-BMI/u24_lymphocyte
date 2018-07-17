@@ -2,10 +2,10 @@
 
 source ../conf/variables.sh
 
-cd lymphocyte
-nohup bash pred_thread_lym.sh \
+cd tan_seg
+nohup bash pred_thread_tan.sh \
     ${PATCH_PATH} 0 1 ${LYM_CNN_PRED_DEVICE} \
-    &> ${LOG_OUTPUT_FOLDER}/log.pred_thread_lym_0.txt &
+    &> ${LOG_OUTPUT_FOLDER}/log.pred_thread_tan_0.txt &
 cd ..
 
 cd necrosis

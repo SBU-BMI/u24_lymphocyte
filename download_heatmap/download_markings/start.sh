@@ -21,6 +21,7 @@ username=${USERNAME}
 case_list=${CASE_LIST}
 raw_marking_output_path=${RAW_MARKINGS_PATH}
 findapi_host=${MONGODB_HOST}
+rm ${RAW_MARKINGS_PATH}/*
 bash download_markings_weights.sh ${ctype} ${username} ${case_list} ${raw_marking_output_path} ${findapi_host}
 
 # At the end, ${RAW_MARKINGS_PATH}/ folder should contain both

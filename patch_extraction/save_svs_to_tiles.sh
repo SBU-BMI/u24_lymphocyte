@@ -4,8 +4,8 @@ source ../conf/variables.sh
 
 COD_PARA=$1
 MAX_PARA=$2
-IN_FOLDER=${SVS_INPUT_PATH}
-OUT_FOLDER=${PATCH_PATH}
+IN_FOLDER=${SVS_INPUT_PATH}     # data/svs
+OUT_FOLDER=${PATCH_PATH}        # data/patches
 
 LINE_N=0
 for files in ${IN_FOLDER}/*.*; do

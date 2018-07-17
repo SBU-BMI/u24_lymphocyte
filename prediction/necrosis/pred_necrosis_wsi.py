@@ -81,6 +81,9 @@ def predict_slide(slide_folder, mu, sigma, param_values, output_path, heat_map_o
         f = open(list_file_path, 'w')
         path_list = glob.glob(slide_folder + '/*.png');
         for img_path in path_list:
+            if len(img_path.split('/')[-1].split('_') != 4):
+                print "img filename is not in correct format: x_y_a_b.png"
+                continue
             base=os.path.basename(img_path);
             img_name = os.path.splitext(base)[0];
             f.write(img_name + '\n');

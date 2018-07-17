@@ -6,6 +6,7 @@ from pred_necrosis_wsi import predict_slide
 
 slide_path = sys.argv[1];
 classification_model_file = sys.argv[2] + '/cnn_nec_model.pkl';
+classification_model_file = '/data01/shared/hanle/results/necrosis_5_0.9684.pkl'
 heat_map_out = sys.argv[3];
 
 def load_model_value(model_file):

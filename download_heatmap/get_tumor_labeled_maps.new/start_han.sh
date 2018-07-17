@@ -53,10 +53,7 @@ for files in ${MARKING_FOLDER}/*_mark.txt; do
           | grep "openslide.level\[0\].width"  | awk '{print substr($2,2,length($2)-2);}'`
     HEIGHT=`openslide-show-properties ${SVS_FILE} \
           | grep "openslide.level\[0\].height" | awk '{print substr($2,2,length($2)-2);}'`
-    
-    echo ${WIDTH}
-    echo ${HEIGHT}
-    echo 'before matlab'
+
     matlab -nodisplay -singleCompThread -r \
     "get_tumor_pos_neg_map('${SVS}', '${USER}', ${WIDTH}, ${HEIGHT}, '${MARK}'); exit;" \
     </dev/null

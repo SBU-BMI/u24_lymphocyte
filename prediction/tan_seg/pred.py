@@ -32,6 +32,8 @@ LearningRate = theano.shared(np.array(5e-3, dtype=np.float32));
 BatchSize = 96;
 
 CNNModel = sys.argv[2] + '/cnn_lym_model.pkl';
+CNNModel = "/data01/shared/hanle/neutrophils.trainAll/data/models_cnn/cnn_tan_model_fulldata_green_28_0.8611.pkl"
+CNNModel = "/data01/shared/hanle/neutrophils.trainAll/data/models_cnn/cnn_tan_model_fulldata_30_0.8284.pkl"
 heat_map_out = sys.argv[3];
 
 mu = 0.6151888371;
@@ -59,7 +61,7 @@ def iterate_minibatches(inputs, augs, targets):
 
 
 def load_data(todo_list, rind):
-    X = np.zeros(shape=(BatchSize*40, 3, APS, APS), dtype=np.float32);
+    X = np.zeros(shape=(BatchSize*40, 4, APS, APS), dtype=np.float32);
     inds = np.zeros(shape=(BatchSize*40,), dtype=np.int32);
     coor = np.zeros(shape=(20000000, 2), dtype=np.int32);
 
@@ -73,13 +75,14 @@ def load_data(todo_list, rind):
             continue;
         if len(fn.split('_')) != 4:
             continue;
-
         x_off = float(fn.split('_')[0]);
         y_off = float(fn.split('_')[1]);
         svs_pw = float(fn.split('_')[2]);
         png_pw = float(fn.split('_')[3].split('.png')[0]);
 
         png = np.array(Image.open(full_fn).convert('RGB'));
+        mask = full_fn.split('.png')[0] + '_mask.png'
+        mask = np.array(Image.open(mask).convert('L'));
         for x in range(0, png.shape[1], APS):
             if x + APS > png.shape[1]:
                 continue;
@@ -88,7 +91,10 @@ def load_data(todo_list, rind):
                     continue;
 
                 if (whiteness(png[y:y+APS, x:x+APS, :]) >= 12):
-                    X[xind, :, :, :] = png[y:y+APS, x:x+APS, :].transpose();
+                    png_temp = png[y:y+APS, x:x+APS, :].transpose();
+                    mask_temp = mask[y:y+APS, x:x+APS].transpose();
+                    mask_temp = np.expand_dims(mask_temp, axis = 0)
+                    X[xind, :, :, :] = np.concatenate((png_temp, mask_temp), axis = 0)
                     inds[xind] = rind;
                     xind += 1;
 
@@ -187,7 +193,7 @@ def auc_roc(Pr, Tr):
 def build_network_from_ae(classn):
     input_var = T.tensor4('input_var');
 
-    layer = layers.InputLayer(shape=(None, 3, PS, PS), input_var=input_var);
+    layer = layers.InputLayer(shape=(None, 4, PS, PS), input_var=input_var);
     layer = batch_norm(layers.Conv2DLayer(layer, 100,  filter_size=(5,5), stride=1, pad='same', nonlinearity=leaky_rectify));
     layer = batch_norm(layers.Conv2DLayer(layer, 120,  filter_size=(5,5), stride=1, pad='same', nonlinearity=leaky_rectify));
     layer = layers.Pool2DLayer(layer, pool_size=(2,2), stride=2, mode='average_inc_pad');
@@ -212,7 +218,7 @@ def build_network_from_ae(classn):
     layer = batch_norm(layers.Deconv2DLayer(layer, 240,  filter_size=(4,4), stride=2, crop=(1,1),  nonlinearity=leaky_rectify));
     layer = batch_norm(layers.Deconv2DLayer(layer, 120,  filter_size=(5,5), stride=1, crop='same', nonlinearity=leaky_rectify));
     layer = batch_norm(layers.Deconv2DLayer(layer, 100,  filter_size=(5,5), stride=1, crop='same', nonlinearity=leaky_rectify));
-    layer =            layers.Deconv2DLayer(layer, 3,    filter_size=(1,1), stride=1, crop='same', nonlinearity=identity);
+    layer =            layers.Deconv2DLayer(layer, 4,    filter_size=(1,1), stride=1, crop='same', nonlinearity=identity);
 
     glblf = batch_norm(layers.Conv2DLayer(prely, 128,  filter_size=(1,1), nonlinearity=leaky_rectify));
     glblf = layers.Pool2DLayer(glblf, pool_size=(5,5), stride=5, mode='average_inc_pad');
@@ -230,7 +236,7 @@ def build_network_from_ae(classn):
     glblf = batch_norm(layers.Deconv2DLayer(glblf, 32,  filter_size=(4,4), stride=2, crop=(1,1),  nonlinearity=leaky_rectify));
     glblf = batch_norm(layers.Deconv2DLayer(glblf, 32,  filter_size=(3,3), stride=1, crop='same', nonlinearity=leaky_rectify));
     glblf = batch_norm(layers.Deconv2DLayer(glblf, 32,  filter_size=(3,3), stride=1, crop='same', nonlinearity=leaky_rectify));
-    glblf =            layers.Deconv2DLayer(glblf, 3,   filter_size=(1,1), stride=1, crop='same', nonlinearity=identity);
+    glblf =            layers.Deconv2DLayer(glblf, 4,   filter_size=(1,1), stride=1, crop='same', nonlinearity=identity);
 
     layer = layers.ElemwiseSumLayer([layer, glblf]);
 

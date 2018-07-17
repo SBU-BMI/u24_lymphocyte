@@ -21,7 +21,7 @@ pred_folder, pred_file_name = os.path.split(pred_file_path);
 filename = pred_file_name;
 heatmap_name = sys.argv[2];
 svs_img_folder=sys.argv[3];
-start_id_multiheat = 4;
+start_id_multiheat = 4; # additional input starts from 4th
 
 # Load configs from ../conf/variables.sh
 mongo_host = 'localhost';
@@ -75,7 +75,7 @@ print "Doing {}".format(imgfilename);
 #caseid = db_result['case_id'];
 #subjectid = db_result['subject_id'];
 caseid = casename;
-subjectid = casename;
+subjectid = casename[:-2];
 
 
 heatmapfile = './json/heatmap_' + filename.split('prediction-')[1] + '.json';

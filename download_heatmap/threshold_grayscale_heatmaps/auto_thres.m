@@ -37,14 +37,23 @@ for f = files'
     im(:, :, 1) = lym .* uint8(im(:, :, 3) > 1);
     im(:, :, 3) = im(:, :, 3) .* uint8(lym<0.5);
     im(:, :, 2) = 0;
-
-    imwrite(im, [out_folder, '/', save_fn]);
+    
+    % ===== change Red color to white
+    %t = im(:,:,3);
+    %t(im(:,:,1) > 0) = 255; im(:,:,3) = t;
+    %t = im(:,:,2);
+    %t(im(:,:,1) > 0) = 255; im(:,:,2) = t;
+    % ==== end changing
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     nlym = sum(sum(double(im(:, :, 1)>0.5)));
     ntissue = nlym + sum(sum(double(im(:, :, 3)>0.5)));
-
     fprintf(fid, '%s,%.6f\n', svs_name, nlym/ntissue);
+    
+    im(:, :, 2) = im(:, :, 1);
+    im(:, :, 1) = 0;
+    imwrite(im, [out_folder, '/', save_fn]);
+
 end
 fclose(fid);
 
@@ -54,6 +63,7 @@ function lym = lym_magic_thres(im, lt)
 h = (1.0-lt)*255.0;
 l = (1.0-lt)*255.0;
 w = 0.15;
+w = 0.15; % Han changed 6/28/18
 
 im = smoothing(im, 0.01+2*w*w);
 bw = bwlabel(im>=l, 4);

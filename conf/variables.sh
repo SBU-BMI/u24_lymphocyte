@@ -4,15 +4,17 @@
 DEFAULT_OBJ=20
 DEFAULT_MPP=0.5
 CANCER_TYPE=quip
-MONGODB_HOST=quip3.bmi.stonybrook.edu
+MONGODB_HOST=quip2.bmi.stonybrook.edu
 MONGODB_PORT=27017
-HEATMAP_VERSION=lym_v1
+HEATMAP_VERSION=neu_0715_3
 
 # Base directory
-BASE_DIR=/data01/shared/lehhou/u24_lymphocyte/
+BASE_DIR=/data01/shared/hanle/neutrophils.pred
 
 # The username you want to download heatmaps from
-USERNAME=john.vanarnam@gmail.com
+#USERNAME=olcabasturk@gmail.com
+USERNAME=ledinhhan2812@gmail.com
+
 # The list of case_ids you want to download heaetmaps from
 CASE_LIST=${BASE_DIR}/data/raw_marking_to_download_case_list/case_list.txt
 
@@ -42,7 +44,7 @@ LYM_CNN_PRED_DEVICE=gpu0
 LYM_NECRO_CNN_MODEL_PATH=${BASE_DIR}/data/models_cnn
 NEC_CNN_TRAINING_DATA=${BASE_DIR}/data/training_data_cnn
 NEC_CNN_TRAINING_DEVICE=gpu1
-NEC_CNN_PRED_DEVICE=gpu1
+NEC_CNN_PRED_DEVICE=gpu0
 
 # Load modules
 module purge
@@ -62,4 +64,3 @@ export CUDA_HOME=/cm/shared/apps/cuda75
 export LIBTIFF_CFLAGS="-I/cm/shared/apps/extlibs/include" 
 export LIBTIFF_LIBS="-L/cm/shared/apps/extlibs/lib -ltiff" 
 source ~/theano/bin/activate
-

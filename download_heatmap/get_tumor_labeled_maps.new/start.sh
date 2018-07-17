@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source ../../conf/variables.sh
-#deactivate    # to deactivate theano
 
 # This script takes input from ./download_markings/data/
 # Check out ./download_markings/main.sh on how to prepare the input files
@@ -27,12 +26,6 @@ SLIDES=${SVS_INPUT_PATH}
 # If you want to test this script, use the following configuration:
 #SLIDES=/data03/tcga_data/tumor/brca/
 
-
-# Han added 4/20/2018
-# delete all subfiles/subfolders in these below folders before saving new data
-rm -r ./tumor_heatmaps/* ./tumor_image_to_extract/* ./tumor_ground_truth/*
-rm -r ${TUMOR_HEATMAPS_PATH}/* ${TUMOR_IMAGES_TO_EXTRACT}/* ${TUMOR_GROUND_TRUTH}/*
-
 for files in ${MARKING_FOLDER}/*_mark.txt; do
     # Get slide id
     SVS=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'__x__' '{print $1}'`
@@ -41,8 +34,6 @@ for files in ${MARKING_FOLDER}/*_mark.txt; do
 
     # Get corresponding marking files
     MARK=`echo ${files} | awk '{gsub("weight", "mark"); print $0;}'`
-    echo 'Display MARK file: '
-    echo ${MARK}
 
     SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
     if [ ! -f ${SVS_FILE} ]; then
@@ -53,10 +44,7 @@ for files in ${MARKING_FOLDER}/*_mark.txt; do
           | grep "openslide.level\[0\].width"  | awk '{print substr($2,2,length($2)-2);}'`
     HEIGHT=`openslide-show-properties ${SVS_FILE} \
           | grep "openslide.level\[0\].height" | awk '{print substr($2,2,length($2)-2);}'`
-    
-    echo ${WIDTH}
-    echo ${HEIGHT}
-    echo 'before matlab'
+
     matlab -nodisplay -singleCompThread -r \
     "get_tumor_pos_neg_map('${SVS}', '${USER}', ${WIDTH}, ${HEIGHT}, '${MARK}'); exit;" \
     </dev/null
