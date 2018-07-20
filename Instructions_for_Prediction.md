@@ -1,4 +1,4 @@
-# Instructions for running the heatmap pipeline
+# Instructions for running the prediction phase
 
 ## Setup
 
