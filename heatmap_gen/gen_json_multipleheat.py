@@ -53,7 +53,7 @@ for h_id, h_name in enumerate(sys.argv[start_id_multiheat::2]):
     heat_list.append(h_name);
     weight_list.append(sys.argv[(start_id_multiheat+1)+2*h_id]);
 
-casename = filename.split('prediction-')[1].split('.low_res')[0];
+casename = filename.split('prediction-')[1].split('.')[0];
 print "Casename ", casename;
 imgfilename = svs_img_folder + '/' + casename + '.svs';
 if not os.path.isfile(imgfilename):
