@@ -54,10 +54,12 @@ for h_id, h_name in enumerate(sys.argv[start_id_multiheat::2]):
     weight_list.append(sys.argv[(start_id_multiheat+1)+2*h_id]);
 
 casename = filename.split('prediction-')[1].split('.')[0];
+imagefile = filename.split('prediction-')[1].split('.low_res')[0];
+
 print "Casename ", casename;
-imgfilename = svs_img_folder + '/' + casename + '.svs';
+imgfilename = svs_img_folder + '/' + imagefile + '.svs';
 if not os.path.isfile(imgfilename):
-    imgfilename = svs_img_folder + '/' + casename + '.tif';
+    imgfilename = svs_img_folder + '/' + imagefile + '.tif';
 if not os.path.isfile(imgfilename):
     print "{}.svs/tif does not exist".format(svs_img_folder + '/' + casename);
     print "Quit";
