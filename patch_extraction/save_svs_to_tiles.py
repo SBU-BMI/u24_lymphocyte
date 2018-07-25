@@ -20,7 +20,13 @@ if not os.path.exists(output_folder):
 
 try:
     oslide = openslide.OpenSlide(slide_name);
-    mag = 10.0 / float(oslide.properties[openslide.PROPERTY_NAME_MPP_X]);
+#    mag = 10.0 / float(oslide.properties[openslide.PROPERTY_NAME_MPP_X]);
+    if openslide.PROPERTY_NAME_MPP_X in oslide.properties:
+       mag = 10.0 / float(oslide.properties[openslide.PROPERTY_NAME_MPP_X]);
+    elif "XResolution" in oslide.properties:
+       mag = 10.0 / float(oslide.properties["XResolution"]);
+    else:
+       mag = 10.0 / float(0.254); 
     pw = int(patch_size_20X * mag / 20);
     width = oslide.dimensions[0];
     height = oslide.dimensions[1];
