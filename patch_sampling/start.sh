@@ -8,9 +8,16 @@ HEAT_TXT_LOC=${HEATMAP_TXT_OUTPUT_FOLDER}
 
 for file in ${HEAT_PNG_LOC}/*.png; do
     SVS=`echo ${file} | awk -F'/' '{print $NF}' | awk -F'.' '{print $1}'`
-    SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
-    if [ ! -f ${SVS_FILE} ]; then
-        echo ${SLIDES}/${SVS}.XXXX.svs does not exist.
+
+    if [ ! `ls -1 ${SLIDES}/${SVS}*.svs` ]; then
+        echo "${SLIDES}/${SVS}.XXXX.svs does not exist. Trying tif..."
+        SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.tif | head -n 1`
+    else
+        SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
+    fi
+
+    if [ -z "$SVS_FILE" ]; then
+        echo "Could not find slide."
         continue;
     fi
 

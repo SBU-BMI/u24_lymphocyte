@@ -35,11 +35,18 @@ for files in ${MARKING_FOLDER}/*_weight.txt; do
     # Get corresponding marking files
     MARK=`echo ${files} | awk '{gsub("weight", "mark"); print $0;}'`
 
-    SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
-    if [ ! -f ${SVS_FILE} ]; then
-        echo ${SLIDES}/${SVS}.XXXX.svs does not exist.
+    if [ ! `ls -1 ${SLIDES}/${SVS}*.svs` ]; then
+        echo "${SLIDES}/${SVS}.XXXX.svs does not exist. Trying tif..."
+        SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.tif | head -n 1`
+    else
+        SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
+    fi
+
+    if [ -z "$SVS_FILE" ]; then
+        echo "Could not find slide."
         continue;
     fi
+
     WIDTH=` openslide-show-properties ${SVS_FILE} \
           | grep "openslide.level\[0\].width"  | awk '{print substr($2,2,length($2)-2);}'`
     HEIGHT=`openslide-show-properties ${SVS_FILE} \
