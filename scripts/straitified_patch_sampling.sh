@@ -1,8 +1,11 @@
 #!/bin/bash
 
 cd ../
+source ./conf/variables.sh
+
 cd ./patch_sampling
 bash start.sh &> ${LOG_OUTPUT_FOLDER}/log.patch_sampling.txt
+
 cd ..
 
 cd ./patch_extraction_from_list
