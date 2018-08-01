@@ -8,10 +8,16 @@ SLIDE_ID=`echo ${INPUT_FILE} | awk -F'/' '{print $NF}' | awk -F'.' '{print $1}'`
 
 SLIDE_FOLDER=${SVS_INPUT_PATH}
 #SLIDE_FOLDER=/data03/tcga_data/tumor/brca/
-SLIDE_FILE=`ls -1 ${SLIDE_FOLDER}/${SLIDE_ID}*.svs | head -n 1`
 
-if [ ! -f ${SLIDE_FILE} ]; then
-    echo ${SLIDE_ID} does not exist under ${SLIDE_FOLDER}
+if [ ! `ls -1 ${SLIDE_FOLDER}/${SLIDE_ID}*.svs` ]; then
+    echo "${SLIDE_ID}*.svs does not exist under ${SLIDE_FOLDER}. Trying tif..."
+    SLIDE_FILE=`ls -1 ${SLIDE_FOLDER}/${SLIDE_ID}*.tif | head -n 1`
+else
+    SLIDE_FILE=`ls -1 ${SLIDE_FOLDER}/${SLIDE_ID}*.svs | head -n 1`
+fi
+
+if [ -z "$SLIDE_FILE" ]; then
+    echo "Could not find slide."
     exit 1
 fi
 
