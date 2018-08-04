@@ -11,6 +11,7 @@ cd ./download_heatmap/get_modified_heatmaps
 bash start.sh &> ${LOG_OUTPUT_FOLDER}/log.get_modified_heatmaps.txt
 cd ../../
 
+rm -rf ${PATCH_FROM_HEATMAP_PATH}/*     # delete all existing files in the data/patches_from_heatmaps
 cd ./patch_extraction_from_list
 for file in ${MODIFIED_HEATMAPS_PATH}/*.csv; do
     if [ ! -f ${file} ]; then
