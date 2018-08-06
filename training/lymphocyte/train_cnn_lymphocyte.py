@@ -65,8 +65,8 @@ def iterate_minibatches(inputs, augs, targets, batchsize, shuffle=False):
 
 
 def load_data_folder(classn, folder, is_train):
-    X = np.zeros(shape=(8000, 3, APS, APS), dtype=np.float32);
-    y = np.zeros(shape=(8000, classn), dtype=np.int32);
+    X = np.zeros(shape=(22000, 3, APS, APS), dtype=np.float32);
+    y = np.zeros(shape=(22000, classn), dtype=np.int32);
 
     nline = 0;
     lines = [line.rstrip('\n') for line in open(folder + '/label.txt')];
@@ -214,8 +214,8 @@ def train_round(num_epochs, network, train_fn, val_fn, classn, X_train, a_train,
             param_values = layers.get_all_param_values(network);
             pickle.dump(param_values, open(filename_output_model, 'w'));
 
-        if epoch == 20:
-            LearningRate.set_value(np.float32(0.10*LearningRate.get_value()));
+        if epoch == 5:
+            LearningRate.set_value(np.float32(0.5*LearningRate.get_value()));
 
     param_values = layers.get_all_param_values(network);
     pickle.dump(param_values, open(filename_output_model, 'w'));
@@ -333,9 +333,9 @@ def split_validation(classn):
 
     a_train = get_aug_feas(X_train);
     a_test = get_aug_feas(X_test);
-    train_round(32, network, new_params_train_fn, val_fn, classn, X_train, a_train, y_train, X_test, a_test, y_test);
+    train_round(20, network, new_params_train_fn, val_fn, classn, X_train, a_train, y_train, X_test, a_test, y_test);
     LearningRate.set_value(np.float32(0.10*LearningRate.get_value()));
-    train_round(32, network, train_fn,            val_fn, classn, X_train, a_train, y_train, X_test, a_test, y_test);
+    train_round(20, network, train_fn,            val_fn, classn, X_train, a_train, y_train, X_test, a_test, y_test);
 
     return;
 
