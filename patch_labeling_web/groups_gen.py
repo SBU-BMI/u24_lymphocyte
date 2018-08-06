@@ -4,6 +4,7 @@ import json
 
 groups_file = "./clicks/groups.txt"
 output_file = "./clicks/groups_sampling.txt"
+output_2 = "groups_sampling.txt"
 N = 8       # maximum number of slides per group
 NoGroups = 7
 
@@ -30,3 +31,8 @@ for line in content:
 with open(output_file, 'w') as f:
     f.write(json.dumps(output))
 
+with open(output_2, 'w') as f:
+    for g in groups:
+        f.write('Group: ' + g + ' ================\n')
+        for s in output[g]:
+            f.write(s + '\n')
