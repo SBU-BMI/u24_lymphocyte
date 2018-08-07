@@ -243,6 +243,11 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function im = marking_one_step(im, lab, norm_x, norm_y, calc_width, calc_height, tot_width, tot_height)
-im(ceil(size(im,1)*(norm_x*tot_width)/calc_width), ceil(size(im,2)*(norm_y*tot_height)/calc_height)) = lab;
-
+x = ceil(size(im,1)*(norm_x*tot_width)/calc_width);
+y = ceil(size(im,2)*(norm_y*tot_height)/calc_height);
+if x > 0 & y > 0
+    im(x, y) = lab;
+else
+    sprintf('Warning: index out of bound in get_labeled_im.m/marking_one_step()')
+end
 
