@@ -12,7 +12,9 @@
 
 ## 4. Run Step2.sh
 to aggregate decisions from pathologists
+
 inputs: clicked\_xxx.txt and ignored\_xxx.txt
+
 outputs: 
 + clicks/groups.txt contains the all slides ID and group it belongs to (1 of 7 groups named A,B,C,D,E,F, and G)
 + groups\_sampling.txt contains maximum 8 slide ID per group
@@ -20,7 +22,7 @@ GIVE groups\_sampling.txt to pathologists. Pathologists will view each slide in 
 
 ## 5. Must mannually create the file thresholds\_group\_user\_defined.txt that contains the thresholds for each group
 the output is thresholds for each slide
-From the thresholds recorded from step 4, compute the threshold for each group by taking the average of thresholds from slides in the same group.
+From the thresholds recorded from the previous step, compute the threshold for each group by taking the average of thresholds from slides in the same group.
 
 -----this is gating step, must be completed before executing next steps--------
 
