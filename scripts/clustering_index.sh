@@ -34,7 +34,7 @@ cd ..
 cd ./csv_generation
 matlab -nodisplay -singleCompThread -r \
 "get_patch_til_group_svs_file_wrap('${CANCER_TYPE}', '${OUT_DIR}', '${IN_DIR}', ${W}, ${H}); exit;" \
-</dev/null &>${LOG_OUTPUT_FOLDER}/log.get_patch_til_group_svs_file.tx
+</dev/null &>${LOG_OUTPUT_FOLDER}/log.get_patch_til_group_svs_file.txt
 wait;
 
 cd ./scripts
