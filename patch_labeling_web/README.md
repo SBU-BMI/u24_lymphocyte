@@ -14,8 +14,8 @@
 to aggregate decisions from pathologists
 inputs: clicked\_xxx.txt and ignored\_xxx.txt
 outputs: 
-### clicks/groups.txt contains the all slides ID and group it belongs to (1 of 7 groups named A,B,C,D,E,F, and G)
-### groups\_sampling.txt contains maximum 8 slide ID per group
++ clicks/groups.txt contains the all slides ID and group it belongs to (1 of 7 groups named A,B,C,D,E,F, and G)
++ groups\_sampling.txt contains maximum 8 slide ID per group
 GIVE groups\_sampling.txt to pathologists. Pathologists will view each slide in this list on CAmicroscope, adjust the thresholds (lym specificity and Nec sensitivity) and record the thresholds for theat slide.
 
 ## 5. Must mannually create the file thresholds\_group\_user\_defined.txt that contains the thresholds for each group
