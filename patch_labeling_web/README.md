@@ -1,6 +1,6 @@
 # Instructions to run this stage
 
-## 1. copy the folder data/patches\_from\_heatmaps to here "patches\_from\_heatmaps".
+## 1. copy the folder data/patches\_from\_heatmaps to here "patches\_from\_heatmap".
 
 ## 2. Run step1.sh
     + to prepare the images for display on website
@@ -13,11 +13,14 @@
 ## 4. Run Step2.sh
 to aggregate decisions from pathologists
 inputs: clicked\_xxx.txt and ignored\_xxx.txt
-outputs: groups.txt contains the slides belong to 1 of 7 groups A,B,C,D,E,F, and G
+outputs: 
+### clicks/groups.txt contains the all slides ID and group it belongs to (1 of 7 groups named A,B,C,D,E,F, and G)
+### groups\_sampling.txt contains maximum 8 slide ID per group
+GIVE groups\_sampling.txt to pathologists. Pathologists will view each slide in this list on CAmicroscope, adjust the thresholds (lym specificity and Nec sensitivity) and record the thresholds for theat slide.
 
 ## 5. Must mannually create the file thresholds\_group\_user\_defined.txt that contains the thresholds for each group
 the output is thresholds for each slide
-there are maximum 8 slides for each group chosen. User must mannually go through each slide, adjust the threshold and record them down. Take average of 8 threshold to be the threshold for that group.
+From the thresholds recorded from step 4, compute the threshold for each group by taking the average of thresholds from slides in the same group.
 
 -----this is gating step, must be completed before executing next steps--------
 
