@@ -14,19 +14,18 @@ if (exist(out_dir) == 0)
 end
 
 
-%src_img_dir = [src_dir '/rates-' cancer_type '-all-auto'];
-src_img_dir = cancertype_path;
-bin_src_imgs = dir(fullfile(src_img_dir, ['rate.' slide_id '.automatic.png']));
+src_img_dir = [src_dir '/rates-' cancer_type '-all-auto'];
+%src_img_dir = cancertype_path;
+bin_src_imgs = dir(fullfile(src_img_dir, '*automatic.png'));
 
-%parpool(12);
-
-for i_img = 1:length(bin_src_imgs)
+parpool(12);
+parfor i_img = 1:length(bin_src_imgs)
     slide_name = bin_src_imgs(i_img).name(6:end-14);
     csv_path = fullfile(out_dir, [slide_name '.csv']);
     info_path = fullfile(out_dir, [slide_name '.info']);
     fileID = fopen(csv_path, 'w');
     infoID = fopen(info_path, 'w');
-    
+
     bin_img_name = [bin_src_imgs(i_img).name(1:end-4) '_thres.png'];
     real_img_name = bin_src_imgs(i_img).name;
     real_img_path = fullfile(src_img_dir, real_img_name);
@@ -73,4 +72,3 @@ end
 
 %delete(gcp);
 end
-
