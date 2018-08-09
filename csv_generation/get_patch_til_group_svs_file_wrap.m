@@ -4,7 +4,7 @@
 % src_dir (source directory):        '/data08/shared/lehhou/active_learning_osprey'
 % group_width:    5
 % group_height:   5
-function get_patch_til_group_svs_file(cancer_type, parent_out_dir, src_dir, group_width, group_height)
+function get_patch_til_group_svs_file_wrap(cancer_type, parent_out_dir, src_dir, group_width, group_height)
 
 group_width = 5;
 group_height = 5;
