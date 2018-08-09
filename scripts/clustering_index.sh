@@ -9,8 +9,7 @@ OUT_DIR=${BASE_DIR}/cluster_indices/inputs
 IN_DIR=${BASE_DIR}/data
 W=5
 H=5
-rm -rf ${OUT_DIR}
-mkdir ${OUT_DIR}
+rm -rf ${OUT_DIR}/*   # deleting existing folders/files
 
 # generate grayscale heatmap
 cd ./download_heatmap/get_grayscale_heatmaps/
