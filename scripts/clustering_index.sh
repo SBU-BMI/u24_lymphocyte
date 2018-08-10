@@ -45,7 +45,7 @@ wait;
 # run the Rscript
 module load R/4.3.0
 cd ./cluster_indices
-bash run_all.sh input_full.csv 6 > ${LOG_OUTPUT_FOLDER}/log.generate_clustering_indices_from_csv_files.txt
+bash run_all.sh input_full.csv 3 > ${LOG_OUTPUT_FOLDER}/log.generate_clustering_indices_from_csv_files.txt
 wait;
 
 bash collateClusterIdx.sh > ${LOG_OUTPUT_FOLDER}/log.collateClusterIndices.txt
