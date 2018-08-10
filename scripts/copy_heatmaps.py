@@ -43,7 +43,7 @@ def copy_heatmap():
         for file in files:
             if '.csv' in file:
                 with open(filename, 'a') as f:
-                    f.write('.inputs/' + cancertype + '/' + file + ',' + './output/' + cancertype + '/,' + cancertype + '\n')
+                    f.write('inputs/' + cancertype + '/' + file + ',' + './output/' + cancertype + '/,' + cancertype + '\n')
 
 
 
