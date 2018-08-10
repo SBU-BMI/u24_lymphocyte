@@ -5,7 +5,8 @@ source variables.sh
 cd ..
 
 CANCER_TYPE=seer
-OUT_DIR=${BASE_DIR}/cluster_indices/inputs
+OUT_FOL=${BASE_DIR}/cluster_indices
+OUT_DIR=${OUT_FOL}/inputs
 IN_DIR=${BASE_DIR}/data
 W=5
 H=5
