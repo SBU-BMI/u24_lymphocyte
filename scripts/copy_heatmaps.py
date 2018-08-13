@@ -37,7 +37,7 @@ def copy_heatmap():
         if os.path.isdir(output):
             os.system('rm -rf ' + output + '/*')
         else:
-            os.system(output)
+            os.system('mkdir ' + output)
         os.system('mkdir ' + os.path.join(output, cancertype))
         inputs = os.path.join(out_dir, 'inputs')
         for file in files:
