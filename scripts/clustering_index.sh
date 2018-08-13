@@ -12,12 +12,14 @@ cd ../
 
 
 ### generate grayscale heatmap
+rm ./data/grayscale_heatmaps/*
 cd ./download_heatmap/get_grayscale_heatmaps/
 bash start.sh
 cd ../../
 wait;
 
 ### run thresholding grayscale heatmap
+rm ./data/thresholded_heatmaps/*
 cd ./download_heatmap/threshold_grayscale_heatmaps/
 bash start.sh
 cd ../../
@@ -47,7 +49,7 @@ cd ./cluster_indices
 bash run_all.sh input_full.csv 3 > ${LOG_OUTPUT_FOLDER}/log.cluster_indices_from_csv_files.txt
 wait;
 
-bash collateClusterIdx.sh > ${LOG_OUTPUT_FOLDER}/log.collateClusterIndices.txt
-wait;
+#bash collateClusterIdx.sh > ${LOG_OUTPUT_FOLDER}/log.collateClusterIndices.txt
+#wait;
 
 exit 0
