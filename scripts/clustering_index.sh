@@ -49,7 +49,6 @@ cd ./cluster_indices
 bash run_all.sh input_full.csv 3 > ${LOG_OUTPUT_FOLDER}/log.cluster_indices_from_csv_files.txt
 wait;
 
-#bash collateClusterIdx.sh > ${LOG_OUTPUT_FOLDER}/log.collateClusterIndices.txt
-#wait;
+bash collateClusterIdx.sh > ${LOG_OUTPUT_FOLDER}/log.collateClusterIndices.txt
 
 exit 0
