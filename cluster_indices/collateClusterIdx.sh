@@ -3,7 +3,7 @@
 # This script collates indicies into one CSV file so they may be interpreted.
 
 #kill previous populates
-rm ./output/*totalClusterStats.csv
+#rm ./output/*totalClusterStats.csv
 
 FOLDERS=./output/*
 topflag=1
