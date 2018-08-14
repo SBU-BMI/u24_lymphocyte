@@ -7,19 +7,30 @@ IN_DIR='../data'
 LOG_OUTPUT_FOLDER='../data/log'
 W=5
 H=5
-rm -rf ${OUT_DIR}/*
+
+if [[ ! -z "${OUT_DIR}/*" ]]; then
+    echo "cleaning up... ${OUT_DIR}/*"
+    rm -rf ${OUT_DIR}/*
+fi
+
 cd ../
 
 
 ### generate grayscale heatmap
-rm ./data/grayscale_heatmaps/*
+if [[ ! -z "data/grayscale_heatmaps/*" ]]; then
+    echo "cleaning up... data/grayscale_heatmaps/*"
+    rm data/grayscale_heatmaps/*
+fi
 cd ./download_heatmap/get_grayscale_heatmaps/
 bash start.sh
 cd ../../
 wait;
 
 ### run thresholding grayscale heatmap
-rm ./data/thresholded_heatmaps/*
+if [[ ! -z "data/thresholded_heatmaps/*" ]]; then
+    echo "cleaning up... data/thresholded_heatmaps/*"
+    rm data/thresholded_heatmaps/*
+fi
 cd ./download_heatmap/threshold_grayscale_heatmaps/
 bash start.sh
 cd ../../
