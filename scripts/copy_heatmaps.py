@@ -5,12 +5,13 @@ cancertype = sys.argv[1]
 out_dir = sys.argv[2]
 option = int(sys.argv[3])
 
+
 def copy_heatmap():
-    if option == 1:     # to copy heatmaps
+    if option == 1:  # to copy heatmaps
         grayscale = '../data/grayscale_heatmaps'
         thresholded = '../data/thresholded_heatmaps'
 
-        #rates-<cancer_type>-all-auto
+        # rates-<cancer_type>-all-auto
         dest = '../data/rates-{}-all-auto'.format(cancertype)
         if not os.path.isdir(dest):
             os.system('mkdir ' + dest)
@@ -18,7 +19,7 @@ def copy_heatmap():
             os.system('rm -rf ' + dest + '/*')
 
         files = os.listdir(grayscale)
-        print(files)
+        print("files: ", files)
         for file in files:
             if '.png' in file:
                 file_dest1 = 'rate.' + file[:-4] + '.automatic.png'
@@ -29,7 +30,7 @@ def copy_heatmap():
     elif option == 2:
         # create input_full.csv
         filename = os.path.join(out_dir, 'input_full.csv');
-        files = os.listdir(os.path.join(os.path.join(out_dir,"inputs"), cancertype))
+        files = os.listdir(os.path.join(os.path.join(out_dir, "inputs"), cancertype))
         print('filename: ', filename)
 
         os.system('rm -rf ' + filename)
@@ -43,13 +44,14 @@ def copy_heatmap():
         for file in files:
             if '.csv' in file:
                 with open(filename, 'a') as f:
-                    f.write('inputs/' + cancertype + '/' + file + ',' + './output/' + cancertype + '/,' + cancertype + '\n')
-
+                    f.write(
+                        'inputs/' + cancertype + '/' + file + ',' + './output/' + cancertype + '/,' + cancertype + '\n')
 
 
 if __name__ == "__main__":
-    print('Usage: python copy_heatmap.py [cancertype] [out_dir] [func_option] \nfunc_option: 1 for copy the heatmap, 2 for create file input_full.csv')
     if len(sys.argv) < 3:
         print('missing arguments')
+        print(
+            'Usage: python copy_heatmaps.py [cancertype] [out_dir] [func_option] \nfunc_option: 1 for copy the heatmap, 2 for create file input_full.csv')
     else:
         copy_heatmap()
