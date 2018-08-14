@@ -2,8 +2,8 @@
 
 # This script collates indices into one CSV file so they may be interpreted.
 
-# If running collateClusterIdx.sh standalone, uncomment removal:
-#rm ./output/*totalClusterStats.csv  # remove previous populates
+# remove previous populates
+rm ./output/*totalClusterStats.csv 2>/dev/null
 
 FOLDERS=./output/*
 topflag=1
