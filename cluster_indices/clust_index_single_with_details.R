@@ -1,3 +1,7 @@
+#
+# This code generates and saves the cluster indices, heat map and star map.
+#
+
 # initialize
 set.seed(1024)
 rm(list = ls(all = T))
