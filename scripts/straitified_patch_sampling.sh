@@ -9,7 +9,7 @@ bash start.sh &> ${LOG_OUTPUT_FOLDER}/log.patch_sampling.txt
 cd ..
 
 cd ./patch_extraction_from_list
-for file in ${TUMOR_IMAGES_TO_EXTRACT}/*.txt; do
+for file in ${PATCH_SAMPLING_LIST_PATH}/*.txt; do
     if [ ! -f ${file} ]; then
         continue;
     fi

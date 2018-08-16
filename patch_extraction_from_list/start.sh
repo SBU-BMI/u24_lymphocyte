@@ -50,8 +50,11 @@ awk -v header=${HEADER_LINE} 'NR>header' ${INPUT_FILE} | while read line; do
         convert \
             ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-original_size.png \
             -resize ${RESIZE}x${RESIZE} \
-            ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png
-        echo ${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X.png ${label} >> ${PATCH_FROM_HEATMAP_PATH}/label.txt
+            ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X-${label}.png
+        echo ${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-20X-${label}.png ${label} ${SLIDE_ID} >> ${PATCH_FROM_HEATMAP_PATH}/label.txt
+        
+        #remove the -original_size images
+        rm ${PATCH_FROM_HEATMAP_PATH}/${SLIDE_ID}-${ext_x0}-${ext_y0}-${ext_size}-original_size.png
     fi
 done
 

@@ -13,6 +13,7 @@ SLIDES=${SVS_INPUT_PATH}
 # For example:
 #   prediction-TCGA-NJ-A55O-01Z-00-DX1
 HEAT_LOC=${HEATMAP_TXT_OUTPUT_FOLDER}
+rm grayscale_heatmaps/*
 
 for files in ${HEAT_LOC}/color-*; do
     # Get slide id

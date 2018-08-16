@@ -26,11 +26,16 @@ SLIDES=${SVS_INPUT_PATH}
 # If you want to test this script, use the following configuration:
 #SLIDES=/data03/tcga_data/tumor/brca/
 
+# delete all subfiles/subfolders in these below folders before saving new data
+rm -r ./tumor_heatmaps/* ./tumor_image_to_extract/* ./tumor_ground_truth/*
+rm -r ${TUMOR_HEATMAPS_PATH}/* ${TUMOR_IMAGES_TO_EXTRACT}/* ${TUMOR_GROUND_TRUTH}/*
+
+
 for files in ${MARKING_FOLDER}/*_weight.txt; do
     # Get slide id
-    SVS=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'_' '{print $1}'`
+    SVS=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'__x__' '{print $1}'`
     # Get user name
-    USER=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'_' '{print $2}'`
+    USER=`echo ${files} | awk -F'/' '{print $NF}' | awk -F'__x__' '{print $2}'`
 
     # Get corresponding marking files
     MARK=`echo ${files} | awk '{gsub("weight", "mark"); print $0;}'`

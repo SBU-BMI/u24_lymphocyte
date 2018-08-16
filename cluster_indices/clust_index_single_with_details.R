@@ -1,3 +1,7 @@
+#
+# This code generates and saves the cluster indices, heat map and star map.
+#
+
 # initialize
 set.seed(1024)
 rm(list = ls(all = T))
@@ -26,8 +30,8 @@ library(apcluster)
 # ORIGINAL: min_num_datapts <- 10 # has to be greater than or equal to 2
 min_num_datapts <- 3 # has to be greater than or equal to 2
 # ORIGINAL: max_num_datapts <- 30000
-max_num_datapts <- 150000 
-save_images <- FALSE
+max_num_datapts <- 500000 
+save_images <- TRUE # starmaps
 
  # this function calculates the details of the clusters
 calculate_cluster_details <- function(x1, apres){

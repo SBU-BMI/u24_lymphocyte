@@ -151,7 +151,9 @@ def val_fn_epoch_on_disk(classn, val_fn):
     while len(todo_list) > 0:
         todo_list, inputs, inds, coor, rind = load_data(todo_list, rind);
         if len(inputs) == 0:
-            break;
+            all_coor[n3:n3+len(coor)] = coor;
+            n3 += len(coor);
+            continue;
         augs = get_aug_feas(inputs);
         targets = np.zeros((inputs.shape[0], classn), dtype=np.int32);
 
