@@ -12,7 +12,7 @@ def copy_heatmap():
         thresholded = '../data/thresholded_heatmaps'
 
         # rates-<cancer_type>-all-auto
-        dest = '../data/rates-{}-all-auto'.format(cancertype)
+        dest = '../data/rates-{0}-all-auto'.format(cancertype)
         if not os.path.isdir(dest):
             os.system('mkdir ' + dest)
         else:
