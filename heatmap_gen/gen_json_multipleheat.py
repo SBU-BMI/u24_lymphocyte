@@ -53,18 +53,19 @@ for h_id, h_name in enumerate(sys.argv[start_id_multiheat::2]):
     heat_list.append(h_name);
     weight_list.append(sys.argv[(start_id_multiheat+1)+2*h_id]);
 
-casename = filename.split('prediction-')[1].split('.')[0];
-imagefile = filename.split('prediction-')[1].split('.low_res')[0];
+casename = filename.split('prediction-')[1].split('.low_res')[0];
+if 'low_res' not in filename:
+    casename = casename.split('.intersected')[0]
 
-print "Casename ", casename;
-imgfilename = svs_img_folder + '/' + imagefile + '.svs';
+print("Casename ", casename);
+imgfilename = svs_img_folder + '/' + casename + '.svs';
 if not os.path.isfile(imgfilename):
-    imgfilename = svs_img_folder + '/' + imagefile + '.tif';
+    imgfilename = svs_img_folder + '/' + casename + '.tif';
 if not os.path.isfile(imgfilename):
-    print "{}.svs/tif does not exist".format(svs_img_folder + '/' + casename);
-    print "Quit";
+    print("{}.svs/tif does not exist".format(svs_img_folder + '/' + casename));
+    print("Quit");
     sys.exit(0);
-print "Doing {}".format(imgfilename);
+print("Doing {}".format(imgfilename));
 
 
 # Retrieve case_id and subject_id from mongodb
