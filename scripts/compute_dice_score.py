@@ -21,7 +21,7 @@ for l in labels_temp:
     if '.png' in l:
         labels.append(l)
 
-print('labels: ', labels)
+#print('labels: ', labels)
 
 preds_temp = os.listdir(preds_fol)
 preds = []
@@ -29,7 +29,7 @@ for p in preds_temp:
     if 'prediction' in p and 'low_res' not in p:
         preds.append(p)
 
-print('prediction files: ', preds)
+#print('prediction files: ', preds)
 
 def check_label(labels, svs_id):
     for l in labels:
@@ -75,9 +75,10 @@ for pred in preds:
         sB = np.sum(B)
         sC = np.sum(C)
         sD = np.sum(D)
-        print('Done processed ', pred)
-        print('Accuracy: ', (sA + sD)/(sA + sB + sC + sD))
-        print('Dice-score/F1-score: ', 2*sA/(2*sA + sB + sC))
+        print('{}\t{:.6f}\t{:.6f}'.format(pred.split('prediction-')[-1], (sA + sD)/(sA + sB + sC + sD), 2*sA/(2*sA + sB + sC)))
+        #print('Done processed ', pred)
+        #print('Accuracy: ', (sA + sD)/(sA + sB + sC + sD))
+        #print('Dice-score/F1-score: ', 2*sA/(2*sA + sB + sC))
 
 
 
