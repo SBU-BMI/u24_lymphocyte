@@ -12,6 +12,7 @@ while read line; do
         N=$((N+1))
 done < ./patches_from_heatmap/label.txt
 
-matlab -nodisplay -r "add_center_rectangle; exit" </dev/null
+python -u add_center_rectangle.py
+#matlab -nodisplay -r "add_center_rectangle; exit" </dev/null
 
 exit 0
