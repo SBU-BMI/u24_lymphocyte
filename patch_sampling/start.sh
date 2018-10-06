@@ -8,16 +8,9 @@ HEAT_TXT_LOC=${HEATMAP_TXT_OUTPUT_FOLDER}
 
 for file in ${HEAT_PNG_LOC}/*.png; do
     SVS=`echo ${file} | awk -F'/' '{print $NF}' | awk -F'.' '{print $1}'`
-
-    if [ ! `ls -1 ${SLIDES}/${SVS}*.svs` ]; then
-        echo "${SLIDES}/${SVS}.XXXX.svs does not exist. Trying tif..."
-        SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.tif | head -n 1`
-    else
-        SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
-    fi
-
-    if [ -z "$SVS_FILE" ]; then
-        echo "Could not find slide."
+    SVS_FILE=`ls -1 ${SLIDES}/${SVS}*.svs | head -n 1`
+    if [ ! -f ${SVS_FILE} ]; then
+        echo ${SLIDES}/${SVS}.XXXX.svs does not exist.
         continue;
     fi
 
@@ -38,8 +31,10 @@ for file in ${HEAT_PNG_LOC}/*.png; do
     HEIGHT=`openslide-show-properties ${SVS_FILE} \
           | grep "openslide.level\[0\].height" | awk '{print substr($2,2,length($2)-2);}'`
 
-    matlab -nodisplay -singleCompThread -r \
-        "get_sample_list('${SVS}', '${HEAT_PNG}', '${PRED}', ${WIDTH}, ${HEIGHT}); exit;" </dev/null
+    #matlab -nodisplay -singleCompThread -r \
+    #    "get_sample_list('${SVS}', '${HEAT_PNG}', '${PRED}', ${WIDTH}, ${HEIGHT}); exit;" </dev/null
+    
+    python -u get_sample_list.py ${SVS} ${HEAT_PNG} ${PRED} ${WIDTH} ${HEIGHT}
 done
 
 cp sample_list/* ${PATCH_SAMPLING_LIST_PATH}/
