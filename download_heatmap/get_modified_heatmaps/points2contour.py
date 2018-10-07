@@ -35,9 +35,8 @@ def points2contour(Xin, Yin, P = 0, dir = 'cw'):
         P_pre = P
         P = np.argmin(D[P, :])
         inds_out.append(P)
-        D[P_pre, :] = float('inf')
-        D[:, P_pre] = float('inf')
-        D[P, P_pre] = float('inf')  # set distance of checked pair to inf
+        D[P_pre, :] = float('inf')  # set distance of checked pair to inf
+        D[:, P_pre] = float('inf')  # set distance of checked pair to inf
 
         # print('\n')
         # print('P_pre:', P_pre)
