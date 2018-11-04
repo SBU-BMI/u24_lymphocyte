@@ -31,10 +31,10 @@ for file in ${HEAT_PNG_LOC}/*.png; do
     HEIGHT=`openslide-show-properties ${SVS_FILE} \
           | grep "openslide.level\[0\].height" | awk '{print substr($2,2,length($2)-2);}'`
 
-    #matlab -nodisplay -singleCompThread -r \
-    #    "get_sample_list('${SVS}', '${HEAT_PNG}', '${PRED}', ${WIDTH}, ${HEIGHT}); exit;" </dev/null
+    matlab -nodisplay -singleCompThread -r \
+        "get_sample_list('${SVS}', '${HEAT_PNG}', '${PRED}', ${WIDTH}, ${HEIGHT}); exit;" </dev/null
     
-    python -u get_sample_list.py ${SVS} ${HEAT_PNG} ${PRED} ${WIDTH} ${HEIGHT}
+    #python -u get_sample_list.py ${SVS} ${HEAT_PNG} ${PRED} ${WIDTH} ${HEIGHT}
 done
 
 cp sample_list/* ${PATCH_SAMPLING_LIST_PATH}/
