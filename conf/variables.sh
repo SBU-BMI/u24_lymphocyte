@@ -43,6 +43,7 @@ LYM_NECRO_CNN_MODEL_PATH=${BASE_DIR}/data/models_cnn
 NEC_CNN_TRAINING_DATA=${BASE_DIR}/data/training_data_cnn
 NEC_CNN_TRAINING_DEVICE=gpu1
 NEC_CNN_PRED_DEVICE=gpu1
+EXTERNAL_LYM_MODEL=0
 
 # Load modules
 module purge

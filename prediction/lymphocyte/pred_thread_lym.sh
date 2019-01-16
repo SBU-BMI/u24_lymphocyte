@@ -10,7 +10,12 @@ DEVICE=$4
 
 DATA_FILE=patch-level-lym.txt
 DONE_FILE=extraction_done.txt
-EXEC_FILE=pred.py
+
+if [ ${EXTERNAL_LYM_MODEL} -eq 0 ]; then
+    EXEC_FILE=pred.py
+else
+    EXEC_FILE=pred_by_external_model.py
+fi
 
 PRE_FILE_NUM=0
 while [ 1 ]; do
