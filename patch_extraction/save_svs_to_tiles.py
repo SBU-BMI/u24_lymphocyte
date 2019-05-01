@@ -22,13 +22,14 @@ try:
     oslide = openslide.OpenSlide(slide_name);
 #    mag = 10.0 / float(oslide.properties[openslide.PROPERTY_NAME_MPP_X]);
     if openslide.PROPERTY_NAME_MPP_X in oslide.properties:
-       mag = 10.0 / float(oslide.properties[openslide.PROPERTY_NAME_MPP_X]);
+        mag = 10.0 / float(oslide.properties[openslide.PROPERTY_NAME_MPP_X]);
     elif "XResolution" in oslide.properties:
-       mag = 10.0 / float(oslide.properties["XResolution"]);
+        mag = 10.0 / float(oslide.properties["XResolution"]);
     elif 'tiff.XResolution' in oslide.properties:   # for Multiplex IHC WSIs, .tiff images
-       mag = 10.0 / float(oslide.properties["tiff.XResolution"]);
+        mag = 10.0 / float(oslide.properties["tiff.XResolution"]);
     else:
-       mag = 10.0 / float(0.254); 
+        print('[WARNING] mpp value not found. Assuming it is 40X with mpp=0.254!', slide_name);
+        mag = 10.0 / float(0.254); 
     pw = int(patch_size_20X * mag / 20);
     width = oslide.dimensions[0];
     height = oslide.dimensions[1];
