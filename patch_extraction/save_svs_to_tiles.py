@@ -51,8 +51,8 @@ for x in range(1, width, pw):
         else:
             pw_y = pw;
 
-        if (patch_size_20X * pw_x / pw <= 0) or \
-           (patch_size_20X * pw_y / pw <= 0) or \
+        if (int(patch_size_20X * pw_x / pw) <= 0) or \
+           (int(patch_size_20X * pw_y / pw) <= 0) or \
            (pw_x <= 0) or (pw_y <= 0):
             continue;
 
