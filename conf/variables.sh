@@ -19,6 +19,7 @@ CASE_LIST=${BASE_DIR}/data/raw_marking_to_download_case_list/case_list.txt
 # Paths of data, log, input, and output
 JSON_OUTPUT_FOLDER=${BASE_DIR}/data/heatmap_jsons
 HEATMAP_TXT_OUTPUT_FOLDER=${BASE_DIR}/data/heatmap_txt
+HEATMAP_META_OUTPUT_FOLDER=${BASE_DIR}/data/heatmap_metadata
 LOG_OUTPUT_FOLDER=${BASE_DIR}/data/log
 SVS_INPUT_PATH=${BASE_DIR}/data/svs
 PATCH_PATH=${BASE_DIR}/data/patches
