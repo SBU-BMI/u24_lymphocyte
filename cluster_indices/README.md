@@ -6,24 +6,24 @@ Assumes that a file called `inputs` and `outputs` are in the same folder.
 
 You need to modify
 
-a. gen_csv.sh
+a. `gen_csv.sh`
 
-a.i. CNNOUTPUT: output of the CNN, the folder containing subfolders with the names rates-cancertype-all-auto.
+a.i. `CNNOUTPUT`: output of the CNN, the folder containing subfolders with the names rates-cancertype-all-auto.
 
-a.ii. CSVFOLDER: any name for the folder of csv files
+a.ii. `CSVFOLDER`: any name for the folder of csv files
 
-a.iii. OUTFOLDER: any name for the folder of results of cluster indices
+a.iii. `OUTFOLDER`: any name for the folder of results of cluster indices
 
 
-b. populate_inputs.py
+b. `populate_inputs.py`
 
-b.i. cancer_types: array of cancer types you want to process
+b.i. `cancer_types`: array of cancer types you want to process
 
     > `nohup bash gen_csv.sh >log.txt &`
 
-    This may take long time to run.
 
-Along with generated csv files, a master csv file named input_full.csv is created. This is the input of the next process
+This may take long time to run.
+
 
 
 2. These csvs can be processed by an R script which runs spatial statistics on presense/absence data.
@@ -36,3 +36,4 @@ Along with generated csv files, a master csv file named input_full.csv is create
 
 
 4. These were then sent to MD Anderson for surival curve analysis.
+
