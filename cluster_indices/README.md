@@ -17,7 +17,8 @@ a.iii. `OUTFOLDER`: any name for the folder of results of cluster indices (this 
 b. `populate_inputs.py`
 
 b.i. `cancer_types`: array of cancer types you want to process
-    > `nohup bash gen_csv.sh >log.txt &`
+    
+	> `nohup bash gen_csv.sh >log.txt &`
 
 
 This may take long time to run.
