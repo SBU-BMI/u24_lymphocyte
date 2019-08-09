@@ -7,7 +7,7 @@ You need to modify
 
 a. `gen_csv.sh`
 
-a.i. `CNNOUTPUT`: output of the CNN, the folder containing subfolders with the names rates-cancertype-all-auto.
+a.i. `CNNOUTPUT`: output of the CNN, the folder containing subfolders with the names `rates-cancertype-all-auto` (e.g. `rates-luad-all-auto`).
 
 a.ii. `CSVFOLDER`: any name for the folder of csv files
 
