@@ -5,7 +5,7 @@
 
 import os
 import skimage
-
+import skimage.io
 
 def get_patch_til_svs_file_singlefile_wrap(cancer_type, parent_out_dir, src_dir):
 

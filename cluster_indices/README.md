@@ -2,10 +2,22 @@
 
 Assumes that a file called `inputs` and `outputs` are in the same folder.
 
-1. We start with pathology images that have infiltrating lymphocytes identified (CNN outputs). In this case these files were found in `/data08/shared/lehhou/active_learning_osprey`. There's a script that processes these files into csvs that contain presence/absence locations of limphocytes on slide. To obtain these csv files, run:
-    > `nohup python populate_inputs.py >log.txt &`
+1. We first need to convert pathology images that have infiltrating lymphocytes identified (CNN outputs) into csv files (input of cluster indices).
 
-    This will run for a day or so.
+You need to modify
+a. gen_csv.sh
+a.i. CNNOUTPUT: output of the CNN, the folder containing subfolders with the names rates-cancertype-all-auto.
+a.ii. CSVFOLDER: any name for the folder of csv files
+a.iii. OUTFOLDER: any name for the folder of results of cluster indices
+
+b. populate_inputs.py
+b.i. cancer_types: array of cancer types you want to process
+
+    > `nohup bash gen_csv.sh >log.txt &`
+
+    This may take long time to run.
+
+Along with generated csv files, a master csv file named input_full.csv is created. This is the input of the next process
 
 2. These csvs can be processed by an R script which runs spatial statistics on presense/absence data.
     > `nohup ./run_all.sh input_full.csv 6 > output.log &`
