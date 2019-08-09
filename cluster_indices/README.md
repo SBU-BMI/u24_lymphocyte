@@ -1,6 +1,5 @@
 # Survival Curve Pipline
 
-Assumes that a file called `inputs` and `outputs` are in the same folder.
 
 1. We first need to convert pathology images that have infiltrating lymphocytes identified (CNN outputs) into csv files (input of cluster indices).
 

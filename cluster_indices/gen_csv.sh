@@ -1,8 +1,8 @@
 #/bin/bash
 
 CNNOUTPUT='cnn_output'
-CSVFOLDER="inputs_small"
-OUTFOLDER="outputs_indices"
+CSVFOLDER="inputs"
+OUTFOLDER="output"
 
 mkdir $CSVFOLDER
 
