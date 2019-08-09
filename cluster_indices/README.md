@@ -9,9 +9,9 @@ a. `gen_csv.sh`
 
 a.i. `CNNOUTPUT`: output of the CNN, the folder containing subfolders with the names `rates-cancertype-all-auto` (e.g. `rates-luad-all-auto`).
 
-a.ii. `CSVFOLDER`: any name for the folder of csv files
+a.ii. `CSVFOLDER`: any name for the folder of csv files (this folder will be created automatically)
 
-a.iii. `OUTFOLDER`: any name for the folder of results of cluster indices
+a.iii. `OUTFOLDER`: any name for the folder of results of cluster indices (this folder will be created automatically
 
 
 b. `populate_inputs.py`
