@@ -2,7 +2,7 @@ import os
 import sys
 from get_patch_til_svs_file_wrap import get_patch_til_svs_file_singlefile_wrap
 
-cancer_types = ['read', 'uvm'];
+cancer_types = ['cancertype'];
 
 processedImages = sys.argv[1];
 outputs = sys.argv[2];
