@@ -9,7 +9,7 @@ The TIL Pipeline *[Tumor-Infiltrating Lymphocytes (TIL)]* has four phases:
 	        * patch-level-color.txt
 	        * patch-level-lym.txt
 	        * patch-level-necrosis.txt
-	    * Generates heatmap data as JSON files in heatmap_jsons, and corresponding prediction data as text files heatmap\_txt
+	    * Generates heatmap data as JSON files in heatmap\_jsons, and corresponding prediction data as text files heatmap\_txt
 	
 2. **Upload/review/refine**
 	* Upload data `(upload_heatmaps.sh)` & ask pathologists to review and refine the visualized data.
@@ -21,23 +21,25 @@ The TIL Pipeline *[Tumor-Infiltrating Lymphocytes (TIL)]* has four phases:
 	* Writes training patches as PNGs to patches\_from\_heatmap
 	
     A. **Manual Step**
-    * Create a new folder in training_data_cnn
-    * Copy patches_from_heatmap/* to training_data_cnn/[new_folder]
-    * Append [new_folder] to the end of file lym_data_list.txt
+    
+    * Create a new folder in training\_data\_cnn
+    * Copy patches\_from\_heatmap/* to training\_data\_cnn/[new\_folder]
+    * Append [new\_folder] to the end of file lym\_data\_list.txt
     
 4. **Generate new cnn model**
 	* Run `train_models.sh`; specifically, training/lymphocyte/start\_cnn\_lymphocyte\_training.sh
-	* Generates a cnn_lym_model.pkl file in models_cnn
+	* Generates a cnn\_lym\_model.pkl file in models\_cnn
 	
 ## Setup
-During the retraining phase, download\_markings\_weights.sh reads caseids from raw_marking_to_download_case_list/case_list.txt, so be sure to update the file when you're ready.
+During the retraining phase, download\_markings\_weights.sh reads caseids from raw\_marking\_to\_download\_case\_list/case\_list.txt, so be sure to update the file when you're ready.
 
 Modify conf/variables.sh:
+
 * MONGODB\_HOST
 * MONGODB\_PORT
 * BASE\_DIR
 * USERNAME
-* HEATMAP_VERSION
+* HEATMAP\_VERSION
 
 **Note:** Whenever we update our CNN model, we need to assign a new execution id for that. This is a manual step, atm.
 
